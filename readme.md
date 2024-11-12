@@ -24,7 +24,6 @@ SESSION_TIME=24
 
 MASTER_USER=admin@admin.com
 MASTER_PASS=senha
-
 ```
 ## Sincronizar as tabelas do banco
 Importe o sript sql no seu banco de dados. /src/mysql/db.sql
