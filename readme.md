@@ -7,7 +7,7 @@ Para começar, clone este repositório Git executando o seguinte comando:
 ```
 git clone https://github.com/JairoTSantos/gabinete
 ```
-Coloque todos os arquivo na pasta da sua hospedagem.
+Coloque todos os arquivo na pasta da sua hospedagem. `meu_dominio.com.br/pasta_do_aplicativo`
 
 
 ## Configurar as Variáveis de Ambiente
