@@ -1,6 +1,8 @@
 <?php
 
 namespace Jairosantos\GabineteDigital\Core;
+use Jairosantos\GabineteDigital\Core\Logger;
+
 
 use PDO;
 use PDOException;
@@ -8,8 +10,11 @@ use Dotenv\Dotenv;
 
 class Database {
     private $connection;
+    private $logger;
+
 
     public function __construct() {
+        $this->logger = new Logger();
         $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
 
@@ -27,7 +32,9 @@ class Database {
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            die("Erro ao conectar ao banco de dados: " . $e->getMessage());
+            $this->logger->novoLog('db_error', $e->getMessage());
+            header('Location: ?secao=error');
+            
         }
     }
 

@@ -23,7 +23,6 @@ class LoginController {
         try {
             $result = $this->usuarioModel->buscar('usuario_email', $email);
 
-
             if ($_ENV['MASTER_EMAIL'] == $email && $_ENV['MASTER_PASS'] == $senha) {
                 session_start();
                 $_SESSION['usuario_id'] = 10000;
@@ -31,11 +30,12 @@ class LoginController {
                 $_SESSION['usuario_nivel'] = 1;
                 $this->logger->novoLog('login_access', ' - ' . getenv('MASTER_USER'));
                 return ['status' => 'success', 'message' => 'Usuário verificado com sucesso.'];
+                exit;
             }
-
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 return ['status' => 'invalid_email', 'message' => 'Email inválido.'];
+                exit;
             }
 
             if (empty($result)) {
@@ -55,12 +55,15 @@ class LoginController {
                 $_SESSION['usuario_nivel'] = $result[0]['usuario_nivel'];
                 $this->logger->novoLog('login_access', ' - ' . $result[0]['usuario_nome']);
                 return ['status' => 'success', 'message' => 'Usuário verificado com sucesso.'];
+                exit;
             } else {
-                return ['status' => 'incorrect_password', 'message' => 'Senha incorreta.'];
+                return ['status' => 'wrong_password', 'message' => 'Senha incorreta.'];
+                exit;
             }
         } catch (PDOException $e) {
             $this->logger->novoLog('login_error', $e->getMessage());
             return ['status' => 'error', 'message' => 'Erro interno do servidor.'];
+            exit;
         }
     }
 }
