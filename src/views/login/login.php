@@ -14,12 +14,12 @@
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_logar'])) {
 
-            $dados = [
-                'email' => htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8'),
-                'senha' => htmlspecialchars($_POST['senha'], ENT_QUOTES, 'UTF-8')
-            ];
 
-            $resultado = $loginController->Logar($dados);
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
+            $senha = htmlspecialchars($_POST['senha'], ENT_QUOTES, 'UTF-8');
+
+
+            $resultado = $loginController->Logar($email, $senha);
 
             if ($resultado['status'] == 'success') {
                 echo '<div class="alert alert-success px-2 py-1 mb-2  rounded-5 custom-alert" data-timeout="3" role="alert">' . $resultado['message'] . '. Aguarde...</div>';

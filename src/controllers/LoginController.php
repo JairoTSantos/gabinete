@@ -19,43 +19,48 @@ class LoginController {
         $dotenv->load();
     }
 
-    public function Logar($dados) {
+    public function Logar($email, $senha) {
         try {
-            $usuario = $this->usuarioModel->buscar('usuario_email', $dados['email']);
-            if ($usuario) {
-                if ($usuario[0]['usuario_ativo']) {
-                    if (password_verify($dados['senha'], $usuario[0]['usuario_senha'])) {
-                        $duracaoEmHoras = getenv('SESSION_TIME');
-                        $duracaoEmSegundos = $duracaoEmHoras * 3600;
+            $result = $this->usuarioModel->buscar('usuario_email', $email);
 
-                        ini_set('session.cookie_secure', 1);
-                        session_set_cookie_params([
-                            'lifetime' => $duracaoEmSegundos,
-                            'path' => '/',
-                            'domain' => $_SERVER['HTTP_HOST'],
-                            'secure' => true,
-                            'httponly' => true,
-                            'samesite' => 'Strict'
-                        ]);
-                        session_start();
-                        $_SESSION['usuario_nome'] = $usuario[0]['usuario_nome'];
-                        $_SESSION['usuario_nivel'] = $usuario[0]['usuario_nivel'];
-                        $_SESSION['usuario_id'] = $usuario[0]['usuario_id'];
-                    } else {
-                        return ['status' => 'wrong_password', 'message' => 'Senha incorreta.'];
-                    }
-                    $this->logger->novoLog('access_log', ' | Login feito por ' . $usuario[0]['usuario_nome']);
 
-                    return ['status' => 'success', 'message' => 'Login feito com sucesso.'];
-                } else {
-                    return ['status' => 'deactived', 'message' => 'Usuário desativado.'];
-                }
-            } else {
+            if ($_ENV['MASTER_EMAIL'] == $email && $_ENV['MASTER_PASS'] == $senha) {
+                session_start();
+                $_SESSION['usuario_id'] = 10000;
+                $_SESSION['usuario_nome'] = $_ENV['MASTER_USER'];
+                $_SESSION['usuario_nivel'] = 1;
+                $this->logger->novoLog('login_access', ' - ' . getenv('MASTER_USER'));
+                return ['status' => 'success', 'message' => 'Usuário verificado com sucesso.'];
+            }
+
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return ['status' => 'invalid_email', 'message' => 'Email inválido.'];
+            }
+
+            if (empty($result)) {
                 return ['status' => 'not_found', 'message' => 'Usuário não encontrado.'];
+                exit;
+            }
+
+            if (!$result[0]['usuario_ativo']) {
+                return ['status' => 'deactivated', 'message' => 'Usuário desativado.'];
+                exit;
+            }
+
+            if (password_verify($senha, $result[0]['usuario_senha'])) {
+                session_start();
+                $_SESSION['usuario_id'] = $result[0]['usuario_id'];
+                $_SESSION['usuario_nome'] = $result[0]['usuario_nome'];
+                $_SESSION['usuario_nivel'] = $result[0]['usuario_nivel'];
+                $this->logger->novoLog('login_access', ' - ' . $result[0]['usuario_nome']);
+                return ['status' => 'success', 'message' => 'Usuário verificado com sucesso.'];
+            } else {
+                return ['status' => 'incorrect_password', 'message' => 'Senha incorreta.'];
             }
         } catch (PDOException $e) {
             $this->logger->novoLog('login_error', $e->getMessage());
-            return ['status' => 'error', 'message' => 'Erro interno do servidor'];
+            return ['status' => 'error', 'message' => 'Erro interno do servidor.'];
         }
     }
 }

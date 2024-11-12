@@ -22,7 +22,8 @@ DB_PASS=root
 
 SESSION_TIME=24
 
-MASTER_USER=admin@admin.com
+MASTER_USER=Administrador
+MASTER_EMAIL=admin@admin.com
 MASTER_PASS=senha
 ```
 ## Sincronizar as tabelas do banco
