@@ -28,7 +28,7 @@ class LoginController {
                 $_SESSION['usuario_id'] = 10000;
                 $_SESSION['usuario_nome'] = $_ENV['MASTER_USER'];
                 $_SESSION['usuario_nivel'] = 1;
-                $this->logger->novoLog('login_access', ' - ' . getenv('MASTER_USER'));
+                $this->logger->novoLog('login_access', ' - ' . $_ENV('MASTER_USER'));
                 return ['status' => 'success', 'message' => 'Usuário verificado com sucesso.'];
                 exit;
             }
