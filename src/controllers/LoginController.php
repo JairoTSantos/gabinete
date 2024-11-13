@@ -28,6 +28,7 @@ class LoginController {
                 $_SESSION['usuario_id'] = 10000;
                 $_SESSION['usuario_nome'] = $_ENV['MASTER_USER'];
                 $_SESSION['usuario_nivel'] = 1;
+                $_SESSION['usuario_foto'] = null;
                 $this->logger->novoLog('login_access', ' - ' . $_ENV['MASTER_USER']);
                 return ['status' => 'success', 'message' => 'Usuário verificado com sucesso.'];
                 exit;
@@ -53,6 +54,7 @@ class LoginController {
                 $_SESSION['usuario_id'] = $result[0]['usuario_id'];
                 $_SESSION['usuario_nome'] = $result[0]['usuario_nome'];
                 $_SESSION['usuario_nivel'] = $result[0]['usuario_nivel'];
+                $_SESSION['usuario_foto'] = $result[0]['usuario_foto'];
                 $this->logger->novoLog('login_access', ' - ' . $result[0]['usuario_nome']);
                 return ['status' => 'success', 'message' => 'Usuário verificado com sucesso.'];
                 exit;

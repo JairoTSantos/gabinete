@@ -29,37 +29,13 @@ if ($buscaUsuario['status'] == 'not_found' || is_integer($usuarioGet) || $buscaU
                     <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=usuarios" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card shadow-sm mb-2 card-background">
-                        <div class="card-body p-2">
-                            <div class="row">
-                                <div class="col-12 col-md-1">
-                                    <?php
-                                    if (isset($buscaUsuario['dados'][0]['usuario_foto'])) {
-                                        echo '<img src="' . $buscaUsuario['dados'][0]['usuario_foto'] . '" class="img-thumbnail img-crop" alt="...">';
-                                    } else {
-                                        echo '<img src="public/img/not_found.jpg" class="img-thumbnail img-crop" alt="...">';
-                                    }
-                                    ?>
-                                </div>
-                                <div class="col-12 col-md-11 mt-2 ">
-                                    <h5 class="card-title"><?php echo $buscaUsuario['dados'][0]['usuario_nome']  ?></h5>
-                                    <p class="card-text mb-1"><i class="bi bi-envelope-fill"></i> <?php echo $buscaUsuario['dados'][0]['usuario_email']  ?></p>
-                                    <p class="card-text mb-1"><i class="bi bi-phone-fill"></i> <?php echo $buscaUsuario['dados'][0]['usuario_telefone']  ?></p>
-                                    <p class="card-text mb-1"><i class="bi bi-cake-fill"></i> <?php echo $buscaUsuario['dados'][0]['usuario_aniversario']  ?></p>
-                                    <p class="card-text mb-1"><?php echo ($buscaUsuario['dados'][0]['usuario_nivel']) ? 'Administrador' : 'Assessor'  ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="card shadow-sm mb-2">
                 <div class="card-body p-2">
                     <?php
+
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_atualizar'])) {
+
                         $usuario = [
                             'usuario_nome' => htmlspecialchars($_POST['usuario_nome'], ENT_QUOTES, 'UTF-8'),
                             'usuario_email' => htmlspecialchars($_POST['usuario_email'], ENT_QUOTES, 'UTF-8'),
@@ -115,19 +91,19 @@ if ($buscaUsuario['status'] == 'not_found' || is_integer($usuarioGet) || $buscaU
                         <div class="col-md-2 col-6">
                             <input type="text" class="form-control form-control-sm" name="usuario_aniversario" data-mask="00/00" placeholder="Aniversário (dd/mm)" value="<?php echo $buscaUsuario['dados'][0]['usuario_aniversario'] ?>" required>
                         </div>
-                        <div class="col-md-1 col-6">
+                        <div class="col-md-2 col-6">
                             <select class="form-select form-select-sm" name="usuario_ativo" required>
                                 <option value="1" <?= $buscaUsuario['dados'][0]['usuario_ativo'] == 1 ? 'selected' : '' ?>>Ativado</option>
                                 <option value="0" <?= $buscaUsuario['dados'][0]['usuario_ativo'] == 0 ? 'selected' : '' ?>>Desativado</option>
                             </select>
                         </div>
-                        <div class="col-md-1 col-6">
+                        <div class="col-md-2 col-6">
                             <select class="form-select form-select-sm" name="usuario_nivel" required>
                                 <option value="1" <?= $buscaUsuario['dados'][0]['usuario_nivel'] == 1 ? 'selected' : '' ?>>Administrador</option>
                                 <option value="2" <?= $buscaUsuario['dados'][0]['usuario_nivel'] == 2 ? 'selected' : '' ?>>Assessor</option>
                             </select>
                         </div>
-                        <div class="col-md-3 col-12">
+                        <div class="col-md-4 col-12">
                             <div class="file-upload">
                                 <input type="file" id="file-input" name="foto" style="display: none;" />
                                 <button id="file-button" type="button" class="btn btn-primary btn-sm"><i class="bi bi-camera-fill"></i> Escolher Foto</button>
