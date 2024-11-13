@@ -37,4 +37,4 @@ Acesse `meu_dominio.com.br/pasta_do_aplicativo` e faça login com o usuário adm
 
 ## Novos usuários
 
-Para permitir que outros usuário criem suas contas, acesse `meu_dominio.com.br/pasta_do_aplicativo/public/cadastro.php` e peça para que eles preencham os campos. Cada novo usuário estará desativado necessitando que um usuário administrativo ative sua conta.
+Para permitir que outros usuário criem suas contas, acesse `meu_dominio.com.br/pasta_do_aplicativo/?secao=cadastro` e peça para que eles preencham os campos. Cada novo usuário estará desativado necessitando que um usuário administrativo ative sua conta.
