@@ -29,7 +29,7 @@ MASTER_PASS=senha
 
 
 ESTADO_DEPUTADO=AP
-NOME_DEPUTADO=Acacio Favacho
+NOME_DEPUTADO="Acacio Favacho" (entre aspas)
 
 ```
 ## Sincronizar as tabelas do banco
