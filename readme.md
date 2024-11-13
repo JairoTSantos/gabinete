@@ -9,6 +9,7 @@ git clone https://github.com/JairoTSantos/gabinete
 ```
 Coloque todos os arquivo na pasta da sua hospedagem. `meu_dominio.com.br/pasta_do_aplicativo`
 
+Entre na pasta do aplicativo e digite `composer install`
 
 ## Configurar as Variáveis de Ambiente
 
