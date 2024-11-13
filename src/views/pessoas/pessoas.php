@@ -22,7 +22,7 @@ $pessoaProfissaoController = new ProfissaoController();
 
 $itens = isset($_GET['itens']) ? (int) $_GET['itens'] : 10;
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
-$ordenarPor = isset($_GET['ordenarPor']) ? htmlspecialchars($_GET['ordenarPor']) : 'pessoa_nome';
+$ordenarPor = isset($_GET['ordenarPor']) && in_array(htmlspecialchars($_GET['ordenarPor']), ['pessoa_nome', 'pessoa_estado', 'pessoa_municipio', 'pessoa_tipo_nome', 'pessoa_criada_por']) ? htmlspecialchars($_GET['ordenarPor']) : 'pessoa_nome';
 $ordem = isset($_GET['ordem']) ? strtolower(htmlspecialchars($_GET['ordem'])) : 'asc';
 $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : null;
 $filtro = isset($_GET['filtro']) ? ($_GET['filtro'] == '1' ? true : false) : false;

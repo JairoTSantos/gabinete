@@ -16,7 +16,7 @@ $orgaoTipoController = new OrgaoTipoController();
 
 $itens = isset($_GET['itens']) ? (int) $_GET['itens'] : 10;
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
-$ordenarPor = isset($_GET['ordenarPor']) ? htmlspecialchars($_GET['ordenarPor']) : 'orgao_nome';
+$ordenarPor = isset($_GET['ordenarPor']) && in_array(htmlspecialchars($_GET['ordenarPor']), ['orgao_nome', 'orgao_estado', 'orgao_municipio', 'orgao_tipo_nome', 'orgao_criado_por']) ? htmlspecialchars($_GET['ordenarPor']) : 'orgao_nome';
 $ordem = isset($_GET['ordem']) ? strtolower(htmlspecialchars($_GET['ordem'])) : 'asc';
 $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : null;
 $filtro = isset($_GET['filtro']) ? ($_GET['filtro'] == '1' ? true : false) : false;
