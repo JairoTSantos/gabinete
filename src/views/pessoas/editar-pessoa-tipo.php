@@ -39,17 +39,18 @@ if ($buscaTipo['status'] == 'not_found' || is_integer($tipoGet) || $buscaTipo['s
                 <div class="card-body p-2">
                     <?php
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_atualizar'])) {
+
                         $dados = [
-                            'pessoa_tipo_nome' => $_POST['pessoa_tipo_nome'],
-                            'pessoa_tipo_descricao' => $_POST['pessoa_tipo_descricao']
+                            'pessoa_tipo_nome' => htmlspecialchars($_POST['pessoa_tipo_nome'], ENT_QUOTES, 'UTF-8'),
+                            'pessoa_tipo_descricao' => htmlspecialchars($_POST['pessoa_tipo_descricao'], ENT_QUOTES, 'UTF-8')
                         ];
+
 
                         $result = $pessoaTipoController->atualizarPessoaTipo($tipoGet, $dados);
 
                         if ($result['status'] == 'success') {
                             echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
                             $buscaTipo = $pessoaTipoController->buscarPessoaTipo('pessoa_tipo_id', $tipoGet);
-
                         } else if ($result['status'] == 'duplicated' || $result['status'] == 'bad_request') {
                             echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
                         } else if ($result['status'] == 'error') {
@@ -89,7 +90,7 @@ if ($buscaTipo['status'] == 'not_found' || is_integer($tipoGet) || $buscaTipo['s
                 </div>
             </div>
 
-            
+
         </div>
     </div>
 </div>

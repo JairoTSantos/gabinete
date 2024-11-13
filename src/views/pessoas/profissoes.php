@@ -4,10 +4,9 @@ include '../src/views/includes/verificaLogado.php';
 
 require_once '../vendor/autoload.php';
 
-use Jairosantos\GabineteDigital\Controllers\OrgaoTipoController;
+use Jairosantos\GabineteDigital\Controllers\ProfissaoController;
 
-$orgaoTipoController = new OrgaoTipoController;
-
+$pessoaProfissaoController = new ProfissaoController;
 
 ?>
 <div class="d-flex" id="wrapper">
@@ -21,9 +20,9 @@ $orgaoTipoController = new OrgaoTipoController;
                 </div>
             </div>
             <div class="card mb-2 card-description">
-                <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-building"></i> Adicionar tipo de Órgão/Entidade</div>
+                <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-people-fill"></i> Adicionar Profissão</div>
                 <div class="card-body p-2">
-                    <p class="card-text mb-2">Nesta seção, é possível adicionar e editar os tipos de órgãos e entidades, garantindo a organização correta dessas informações no sistema.</p>
+                    <p class="card-text mb-2">Nesta seção, é possível adicionar e editar as profissões, garantindo a organização correta dessas informações no sistema.</p>
                     <p class="card-text mb-0">Todos os campos são obrigatórios</p>
                 </div>
             </div>
@@ -31,13 +30,13 @@ $orgaoTipoController = new OrgaoTipoController;
                 <div class="card-body p-2">
                     <?php
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_salvar'])) {
-                        $dados = [
-                            'orgao_tipo_nome' => htmlspecialchars($_POST['orgao_tipo_nome'], ENT_QUOTES, 'UTF-8'),
-                            'orgao_tipo_descricao' => htmlspecialchars($_POST['orgao_tipo_descricao'], ENT_QUOTES, 'UTF-8')
-                        ];
-                        
 
-                        $result = $orgaoTipoController->criarOrgaoTipo($dados);
+                        $dados = [
+                            'pessoas_profissoes_nome' => htmlspecialchars($_POST['pessoas_profissoes_nome'], ENT_QUOTES, 'UTF-8'),
+                            'pessoas_profissoes_descricao' => htmlspecialchars($_POST['pessoas_profissoes_descricao'], ENT_QUOTES, 'UTF-8')
+                        ];
+
+                        $result = $pessoaProfissaoController->criarPessoaProfissao($dados);
 
                         if ($result['status'] == 'success') {
                             echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
@@ -50,10 +49,10 @@ $orgaoTipoController = new OrgaoTipoController;
                     ?>
                     <form class="row g-2 form_custom" id="form_novo" method="POST">
                         <div class="col-md-2 col-12">
-                            <input type="text" class="form-control form-control-sm" name="orgao_tipo_nome" placeholder="Nome do Tipo" required>
+                            <input type="text" class="form-control form-control-sm" name="pessoas_profissoes_nome" placeholder="Nome da Profissão" required>
                         </div>
                         <div class="col-md-4 col-12">
-                            <input type="text" class="form-control form-control-sm" name="orgao_tipo_descricao" placeholder="Descrição" required>
+                            <input type="text" class="form-control form-control-sm" name="pessoas_profissoes_descricao" placeholder="Descrição" required>
                         </div>
                         <div class="col-md-1 col-12">
                             <button type="submit" class="btn btn-success btn-sm" name="btn_salvar"><i class="bi bi-floppy-fill"></i> Salvar</button>
@@ -75,13 +74,13 @@ $orgaoTipoController = new OrgaoTipoController;
                             </thead>
                             <tbody>
                                 <?php
-                                $busca = $orgaoTipoController->listarOrgaosTipos();
+                                $busca = $pessoaProfissaoController->listarPessoasProfissoes();
                                 if ($busca['status'] == 'success') {
-                                    foreach ($busca['dados'] as $orgaoTipo) {
+                                    foreach ($busca['dados'] as $pessoaProfissao) {
                                         echo '<tr>';
-                                        echo '<td style="white-space: nowrap;"><a href="?secao=orgao-tipo&id=' . $orgaoTipo['orgao_tipo_id'] . '">' . $orgaoTipo['orgao_tipo_nome'] . '</a></td>';
-                                        echo '<td style="white-space: nowrap;">' . $orgaoTipo['orgao_tipo_descricao'] . '</td>';
-                                        echo '<td style="white-space: nowrap;">' . $orgaoTipo['usuario_nome'] . ' - ' . date('d/m', strtotime($orgaoTipo['orgao_tipo_criado_em'])) . '</td>';
+                                        echo '<td style="white-space: nowrap;"><a href="?secao=pessoa-profissao&id=' . $pessoaProfissao['pessoas_profissoes_id'] . '">' . $pessoaProfissao['pessoas_profissoes_nome'] . '</a></td>';
+                                        echo '<td style="white-space: nowrap;">' . $pessoaProfissao['pessoas_profissoes_descricao'] . '</td>';
+                                        echo '<td style="white-space: nowrap;">' . $pessoaProfissao['usuario_nome'] . ' - ' . date('d/m', strtotime($pessoaProfissao['pessoas_profissoes_criado_em'])) . '</td>';
                                         echo '</tr>';
                                     }
                                 } else if ($busca['status'] == 'empty') {

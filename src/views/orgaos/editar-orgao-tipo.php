@@ -40,9 +40,10 @@ if ($buscaTipo['status'] == 'not_found' || is_integer($tipoGet) || $buscaTipo['s
                     <?php
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_atualizar'])) {
                         $dados = [
-                            'orgao_tipo_nome' => $_POST['orgao_tipo_nome'],
-                            'orgao_tipo_descricao' => $_POST['orgao_tipo_descricao']
+                            'orgao_tipo_nome' => htmlspecialchars($_POST['orgao_tipo_nome'], ENT_QUOTES, 'UTF-8'),
+                            'orgao_tipo_descricao' => htmlspecialchars($_POST['orgao_tipo_descricao'], ENT_QUOTES, 'UTF-8')
                         ];
+
 
                         $result = $orgaoTipoController->atualizarOrgaoTipo($tipoGet, $dados);
 

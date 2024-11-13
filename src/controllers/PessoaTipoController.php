@@ -9,10 +9,12 @@ use PDOException;
 class PessoaTipoController {
     private $pessoaTipoModel;
     private $logger;
+    private $usuario_id;
 
     public function __construct() {
         $this->pessoaTipoModel = new PessoaTipo();
         $this->logger = new Logger();
+        $this->usuario_id = $_SESSION['usuario_id'];
     }
 
     public function criarPessoaTipo($dados) {
@@ -25,6 +27,9 @@ class PessoaTipoController {
         }
 
         try {
+
+            $dados['pessoa_tipo_criado_por'] = $this->usuario_id;
+
             $this->pessoaTipoModel->criar($dados);
             return ['status' => 'success', 'message' => 'Tipo de pessoa criado com sucesso.'];
         } catch (PDOException $e) {

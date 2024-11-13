@@ -21,7 +21,7 @@ class OrgaoTipo {
 
         $stmt->bindParam(':orgao_tipo_nome', $dados['orgao_tipo_nome']);
         $stmt->bindParam(':orgao_tipo_descricao', $dados['orgao_tipo_descricao']);
-        $stmt->bindParam(':orgao_tipo_criado_por', $_SESSION['usuario_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':orgao_tipo_criado_por', $dados['orgao_tipo_criador_por'], PDO::PARAM_INT);
 
         return $stmt->execute();
     }

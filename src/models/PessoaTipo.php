@@ -21,7 +21,7 @@ class PessoaTipo {
 
         $stmt->bindParam(':pessoa_tipo_nome', $dados['pessoa_tipo_nome']);
         $stmt->bindParam(':pessoa_tipo_descricao', $dados['pessoa_tipo_descricao']);
-        $stmt->bindParam(':pessoa_tipo_criado_por', $_SESSION['usuario_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':pessoa_tipo_criado_por', $dados['pessoa_tipo_criado_por'], PDO::PARAM_INT);
 
         return $stmt->execute();
     }

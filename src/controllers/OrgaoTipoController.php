@@ -9,10 +9,12 @@ use PDOException;
 class OrgaoTipoController {
     private $orgaoTipoModel;
     private $logger;
+    private $usuario_id;
 
     public function __construct() {
         $this->orgaoTipoModel = new OrgaoTipo();
         $this->logger = new Logger();
+        $this->usuario_id = $_SESSION['usuario_id'];
     }
 
     public function criarOrgaoTipo($dados) {
@@ -25,6 +27,9 @@ class OrgaoTipoController {
         }
 
         try {
+
+            $dados['orgao_tipo_criador_por'] = $this->usuario_id;
+
             $this->orgaoTipoModel->criar($dados);
             return ['status' => 'success', 'message' => 'Tipo de órgão criado com sucesso.'];
         } catch (PDOException $e) {

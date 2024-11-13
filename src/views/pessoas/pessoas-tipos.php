@@ -30,9 +30,10 @@ $pessoaTipoController = new PessoaTipoController;
                 <div class="card-body p-2">
                     <?php
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_salvar'])) {
+                        
                         $dados = [
-                            'pessoa_tipo_nome' => $_POST['pessoa_tipo_nome'],
-                            'pessoa_tipo_descricao' => $_POST['pessoa_tipo_descricao']
+                            'pessoa_tipo_nome' => htmlspecialchars($_POST['pessoa_tipo_nome'], ENT_QUOTES, 'UTF-8'),
+                            'pessoa_tipo_descricao' => htmlspecialchars($_POST['pessoa_tipo_descricao'], ENT_QUOTES, 'UTF-8')
                         ];
 
                         $result = $pessoaTipoController->criarPessoaTipo($dados);

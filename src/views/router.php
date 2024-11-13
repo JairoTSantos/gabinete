@@ -17,6 +17,7 @@ $rotas = [
     'orgao-tipo' => '../src/views/orgaos/editar-orgao-tipo.php',
     'pessoas-tipos' => '../src/views/pessoas/pessoas-tipos.php',
     'pessoa-tipo' => '../src/views/pessoas/editar-pessoa-tipo.php',
+    'profissoes' => '../src/views/pessoas/profissoes.php',
 ];
 
 if (array_key_exists($pagina, $rotas)) {
