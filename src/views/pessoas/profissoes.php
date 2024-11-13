@@ -78,7 +78,7 @@ $pessoaProfissaoController = new ProfissaoController;
                                 if ($busca['status'] == 'success') {
                                     foreach ($busca['dados'] as $pessoaProfissao) {
                                         echo '<tr>';
-                                        echo '<td style="white-space: nowrap;"><a href="?secao=pessoa-profissao&id=' . $pessoaProfissao['pessoas_profissoes_id'] . '">' . $pessoaProfissao['pessoas_profissoes_nome'] . '</a></td>';
+                                        echo '<td style="white-space: nowrap;"><a href="?secao=profissao&id=' . $pessoaProfissao['pessoas_profissoes_id'] . '">' . $pessoaProfissao['pessoas_profissoes_nome'] . '</a></td>';
                                         echo '<td style="white-space: nowrap;">' . $pessoaProfissao['pessoas_profissoes_descricao'] . '</td>';
                                         echo '<td style="white-space: nowrap;">' . $pessoaProfissao['usuario_nome'] . ' - ' . date('d/m', strtotime($pessoaProfissao['pessoas_profissoes_criado_em'])) . '</td>';
                                         echo '</tr>';
