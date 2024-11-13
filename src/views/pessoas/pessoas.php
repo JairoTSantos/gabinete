@@ -162,7 +162,6 @@ $filtro = isset($_GET['filtro']) ? ($_GET['filtro'] == '1' ? true : false) : fal
 
                                 $buscaOrgao = $orgaoController->listarOrgaos(1000, 1, 'ASC', 'orgao_nome', null, false);
 
-                                print_r($buscaOrgao);
                                 if ($buscaOrgao['status'] === 'success') {
                                     foreach ($buscaOrgao['dados'] as $orgao) {
                                         echo '<option value="' . $orgao['orgao_id'] . '">' . $orgao['orgao_nome'] . '</option>';
