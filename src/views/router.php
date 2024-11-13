@@ -12,6 +12,7 @@ $rotas = [
     'cadastro' => '../src/views/cadastro/cadastro.php',
     'orgaos' => '../src/views/orgaos/orgaos.php',
     'orgao' => '../src/views/orgaos/editar-orgao.php',
+    'ficha-orgao' => '../src/views/orgaos/ficha-orgao.php',
     'orgaos-tipos' => '../src/views/orgaos/orgaos-tipos.php',
     'orgao-tipo' => '../src/views/orgaos/editar-orgao-tipo.php'
 ];

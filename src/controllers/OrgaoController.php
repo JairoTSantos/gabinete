@@ -95,11 +95,7 @@ class OrgaoController {
     public function apagarOrgao($orgao_id) {
         try {
             $result = $this->buscarOrgao('orgao_id', $orgao_id);
-
-            if ($result['dados'][0]['orgao_foto'] != null) {
-                unlink($result['dados'][0]['orgao_foto']);
-            }
-
+            
             $this->orgaoModel->apagar($orgao_id);
             return ['status' => 'success', 'message' => 'Órgão apagado com sucesso.'];
         } catch (PDOException $e) {

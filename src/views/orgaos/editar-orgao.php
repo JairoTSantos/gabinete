@@ -93,6 +93,23 @@ if ($busca['status'] == 'not_found' || is_integer($orgaoGet) || $busca['status']
                             echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" role="alert" data-timeout="3">' . $result['message'] . '</div>';
                         }
                     }
+
+
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_apagar'])) {
+                        $result = $orgaoController->apagarOrgao($orgaoGet);
+
+                        if ($result['status'] == 'success') {
+                            echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '. Aguarde...</div>';
+                            echo '<script>
+                                setTimeout(function(){
+                                    window.location.href = "?secao=orgaos";
+                                }, 1000);</script>';
+                        } else if ($result['status'] == 'duplicated' || $result['status'] == 'bad_request' || $result['status'] == 'invalid_email') {
+                            echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        } else if ($result['status'] == 'error') {
+                            echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="0" role="alert">' . $result['message'] . '</div>';
+                        }
+                    }
                     ?>
                     <form class="row g-2 form_custom " id="form_novo" method="POST" enctype="application/x-www-form-urlencoded">
                         <div class="col-md-5 col-12">
@@ -160,6 +177,7 @@ if ($busca['status'] == 'not_found' || is_integer($orgaoGet) || $busca['status']
         </div>
     </div>
 </div>
+
 
 <script>
     $(document).ready(function() {
