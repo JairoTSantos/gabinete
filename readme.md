@@ -26,6 +26,11 @@ SESSION_TIME=24
 MASTER_USER=Administrador
 MASTER_EMAIL=admin@admin.com
 MASTER_PASS=senha
+
+
+ESTADO_DEPUTADO=AP
+NOME_DEPUTADO=Acacio Favacho
+
 ```
 ## Sincronizar as tabelas do banco
 Importe o sript sql no seu banco de dados. /src/mysql/db.sql

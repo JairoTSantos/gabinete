@@ -37,7 +37,7 @@ $filtro = isset($_GET['filtro']) ? ($_GET['filtro'] == '1' ? true : false) : fal
                 <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-building"></i> Órgãos e entidades</div>
                 <div class="card-body p-2">
                     <p class="card-text mb-2">Nesta seção, é possível adicionar e editar os tipos de órgãos e entidades, garantindo a organização correta dessas informações no sistema.</p>
-                    <p class="card-text mb-0">Todos os campos são obrigatórios</p>
+                    <p class="card-text mb-0">Os campos <b>Nome</b>, <b>email</b>, <b>estado</b> e <b>município</b> são <b>obrigatórios</b></p>
                 </div>
             </div>
             <div class="card shadow-sm mb-2 ">
@@ -181,7 +181,7 @@ $filtro = isset($_GET['filtro']) ? ($_GET['filtro'] == '1' ? true : false) : fal
                                 <div class="col-md-2 col-6">
                                     <select class="form-select form-select-sm" name="filtro" required>
                                         <option value="0" <?php echo $filtro == 0 ? 'selected' : ''; ?>>Todos os estados</option>
-                                        <option value="1" <?php echo $filtro == 1 ? 'selected' : ''; ?>>Somente <?php echo $_ENV['ESTADO_DEP'] ?></option>
+                                        <option value="1" <?php echo $filtro == 1 ? 'selected' : ''; ?>>Somente <?php echo $_ENV['ESTADO_DEPUTADO'] ?></option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 col-10">

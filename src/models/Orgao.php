@@ -67,13 +67,13 @@ class Orgao {
 
         if ($termo === null) {
             if ($filtro) {
-                $query = "SELECT view_orgaos.*, (SELECT COUNT(*) FROM orgaos WHERE orgao_id <> 1000 AND orgao_estado = '".$_ENV['ESTADO_DEP']."') AS total FROM view_orgaos WHERE orgao_id <> 1000 AND orgao_estado = '".$_ENV['ESTADO_DEP']."' ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+                $query = "SELECT view_orgaos.*, (SELECT COUNT(*) FROM orgaos WHERE orgao_id <> 1000 AND orgao_estado = '".$_ENV['ESTADO_DEPUTADO']."') AS total FROM view_orgaos WHERE orgao_id <> 1000 AND orgao_estado = '".$_ENV['ESTADO_DEPUTADO']."' ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
             } else {
                 $query = "SELECT view_orgaos.*, (SELECT COUNT(*) FROM orgaos WHERE orgao_id <> 1000) AS total FROM view_orgaos WHERE orgao_id <> 1000 ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
             }
         } else {
             if ($filtro) {
-                $query = "SELECT view_orgaos.*, (SELECT COUNT(*) FROM orgaos WHERE orgao_id <> 1000 AND orgao_nome LIKE :termo AND orgao_estado = '".$_ENV['ESTADO_DEP']."') AS total FROM view_orgaos WHERE orgao_id <> 1000 AND orgao_nome LIKE :termo AND orgao_estado = '".$_ENV['ESTADO_DEP']."' ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+                $query = "SELECT view_orgaos.*, (SELECT COUNT(*) FROM orgaos WHERE orgao_id <> 1000 AND orgao_nome LIKE :termo AND orgao_estado = '".$_ENV['ESTADO_DEPUTADO']."') AS total FROM view_orgaos WHERE orgao_id <> 1000 AND orgao_nome LIKE :termo AND orgao_estado = '".$_ENV['ESTADO_DEPUTADO']."' ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
                 $termo = '%' . $termo . '%';
             } else {
                 $query = "SELECT view_orgaos.*, (SELECT COUNT(*) FROM orgaos WHERE orgao_id <> 1000 AND orgao_nome LIKE :termo) AS total FROM view_orgaos WHERE orgao_id <> 1000 AND orgao_nome LIKE :termo ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
