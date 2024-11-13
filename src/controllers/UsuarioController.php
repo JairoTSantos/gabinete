@@ -19,7 +19,7 @@ class UsuarioController {
         $this->uploadFile = new UploadFile();
         $this->pasta_foto = 'arquivos/fotos_usuarios/';
         $this->logger = new Logger();
-        $this->usuario_nivel = $_SESSION['usuario_nivel'];
+        $this->usuario_nivel = (isset($_SESSION['usuario_nivel'])) ? $_SESSION['usuario_nivel'] : 1;
     }
 
     public function criarUsuario($dados) {
@@ -35,7 +35,7 @@ class UsuarioController {
         }
 
         foreach ($camposObrigatorios as $campo) {
-            if (empty($dados[$campo])) {
+            if (!isset($dados[$campo])) {
                 return ['status' => 'bad_request', 'message' => "O campo '$campo' é obrigatório."];
             }
         }
@@ -135,6 +135,11 @@ class UsuarioController {
 
     public function apagarUsuario($usuario_id) {
         try {
+
+            if ($this->usuario_nivel != 1) {
+                return ['status' => 'forbidden', 'message' => 'Você não tem autorização para apagar esse usuário.'];
+            }
+
             $result = $this->buscarUsuario('usuario_id', $usuario_id);
 
             if ($result['dados'][0]['usuario_foto'] != null) {

@@ -138,6 +138,45 @@ if ($buscaUsuario['status'] == 'not_found') {
                     </form>
                 </div>
             </div>
+            <div class="card shadow-sm mb-2">
+                <div class="card-body p-2">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped mb-0 custom-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Últimos acessos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $pastaLogs = '../logs';
+                                if (is_dir($pastaLogs)) {
+                                    $arquivosLog = glob($pastaLogs . '/*_login_access.log');
+                                    $linhasFiltradas = [];
+                                    foreach ($arquivosLog as $arquivoLog) {
+                                        $linhas = file($arquivoLog, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+                                        $linhasFiltradas = array_merge($linhasFiltradas, array_filter($linhas, function ($linha) {
+                                            return strpos($linha, $_SESSION['usuario_nome']) !== false;
+                                        }));
+                                    }
+                                    rsort($linhasFiltradas);
+                                    if (!empty($linhasFiltradas)) {
+                                        foreach ($linhasFiltradas as $linha) {
+                                            list($dataHora, $usuario) = explode(' - ', $linha, 2);
+                                            echo "<tr><td>" . date('d/m \à\s H:i', strtotime($dataHora)) . "</td></tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td>Nenhum registro encontrado.<td></tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td>Pasta de logs não encontrada.<td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
