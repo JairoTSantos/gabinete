@@ -55,6 +55,7 @@ $filtro = isset($_GET['filtro']) ? ($_GET['filtro'] == '1' ? true : false) : fal
                                     <li class="nav-item">
                                         <a class="nav-link active p-1" aria-current="page" href="#">
                                             <button class="btn btn-success btn-sm" style="font-size: 0.850em;" id="btn_novo_tipo" type="button"><i class="bi bi-plus-circle-fill"></i> Novo tipo</button>
+                                            <button class="btn btn-secondary btn-sm" style="font-size: 0.850em;" id="btn_nova_profissao" type="button"><i class="bi bi-plus-circle-fill"></i> Nova profissao</button>
                                         </a>
                                     </li>
                                 </ul>
@@ -391,9 +392,37 @@ $filtro = isset($_GET['filtro']) ? ($_GET['filtro'] == '1' ? true : false) : fal
         }
     });
 
+    $('#profissao').change(function() {
+        if ($('#profissao').val() == '+') {
+            if (window.confirm("Você realmente deseja inserir uma nova profissão?")) {
+                window.location.href = "?secao=profissoes";
+            } else {
+                $('#profissao').val(1000).change();
+            }
+        }
+    });
+
+    $('#orgao').change(function() {
+        if ($('#orgao').val() == '+') {
+            if (window.confirm("Você realmente deseja inserir um novo órgão?")) {
+                window.location.href = "?secao=orgaos";
+            } else {
+                $('#orgao').val(1000).change();
+            }
+        }
+    });
+
     $('#btn_novo_tipo').click(function() {
-        if (window.confirm("Você realmente deseja inserir um novo tipo?")) {
-            window.location.href = "?secao=orgaos-tipos";
+        if (window.confirm("Você realmente deseja inserir um novo tipo de pessoa?")) {
+            window.location.href = "?secao=pessoas-tipos";
+        } else {
+            return false;
+        }
+    });
+
+    $('#btn_nova_profissao').click(function() {
+        if (window.confirm("Você realmente deseja inserir uma nova profissão?")) {
+            window.location.href = "?secao=profissoes";
         } else {
             return false;
         }
