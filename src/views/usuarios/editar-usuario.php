@@ -12,7 +12,7 @@ $usuarioGet = $_GET['id'];
 
 $buscaUsuario = $usuarioController->buscarUsuario('usuario_id', $usuarioGet);
 
-if ($buscaUsuario['status'] == 'not_found') {
+if ($buscaUsuario['status'] == 'not_found' || $busca['status'] == 'error') {
     header('Location: ?secao=usuarios');
 }
 
