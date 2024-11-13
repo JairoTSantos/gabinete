@@ -25,6 +25,8 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+
+    <script src="vendor/jquery/jquery.min.js"></script>
 </head>
 
 <body>
@@ -32,7 +34,6 @@
     <?php include '../src/views/router.php' ?>
 
 
-    <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/startbootstrap-simple-sidebar-master/dist/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>

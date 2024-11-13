@@ -10,9 +10,9 @@ $rotas = [
     'sair' => '../src/views/login/sair.php',
     'error' => '../src/views/error.php',
     'cadastro' => '../src/views/cadastro/cadastro.php',
+    'orgaos' => '../src/views/orgaos/orgaos.php',
     'orgaos-tipos' => '../src/views/orgaos/orgaos-tipos.php',
     'orgao-tipo' => '../src/views/orgaos/editar-orgao-tipo.php'
-
 ];
 
 if (array_key_exists($pagina, $rotas)) {
