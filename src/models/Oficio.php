@@ -41,7 +41,6 @@ class Oficio {
 
         $stmt = $this->conn->prepare($query);
 
-        // Bind dos parâmetros
         $stmt->bindParam(':oficio_titulo', $dados['oficio_titulo']);
         $stmt->bindParam(':oficio_resumo', $dados['oficio_resumo']);
         $stmt->bindParam(':oficio_arquivo', $dados['oficio_arquivo']);
@@ -53,15 +52,16 @@ class Oficio {
     }
 
     public function listar($ano, $termo) {
-        if ($ano == '' && $termo == '') {
+        if (empty($ano) && empty($termo)) {
             $query = "SELECT * FROM view_oficios ORDER BY oficio_titulo DESC";
-        } else if ($ano != '' && $termo == '') {
+        } else if (!empty($ano) && empty($termo)) {
             $query = "SELECT * FROM view_oficios WHERE oficio_ano = :oficio_ano ORDER BY oficio_titulo DESC";
-        } else if ($ano != '' && $termo != '') {
+        } else if (!empty($ano) && !empty($termo)) {
             $query = "SELECT * FROM view_oficios WHERE oficio_ano = :oficio_ano AND oficio_resumo LIKE :termo ORDER BY oficio_titulo DESC";
-        } else if ($ano == '' && $termo != '') {
+        } else if (empty($ano) && !empty($termo)) {
             $query = "SELECT * FROM view_oficios WHERE oficio_resumo LIKE :termo ORDER BY oficio_titulo DESC";
         }
+
 
         $stmt = $this->conn->prepare($query);
 
@@ -69,7 +69,7 @@ class Oficio {
             $stmt->bindParam(':oficio_ano', $ano);
         }
         if ($termo != '') {
-            $termo = '%' . $termo . '%'; 
+            $termo = '%' . $termo . '%';
             $stmt->bindParam(':termo', $termo);
         }
 
