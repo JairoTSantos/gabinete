@@ -144,7 +144,7 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
                             <input type="text" class="form-control form-control-sm" name="nota_resumo" placeholder="Resumo" value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['nota_resumo'] : '' ?>" required>
                         </div>
                         <div class="col-md-2 col-12">
-                            <input type="text" class="form-control form-control-sm" disabled value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['usuario_nome'] : '' ?>" required>
+                            <input type="text" class="form-control form-control-sm" disabled value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['usuario_nome'].' | '.date('d/m - H:i', strtotime($buscaNota['dados'][0]['nota_criada_em'])) : '' ?>" required>
                         </div>
                         <div class="col-md-12 col-12">
                             <script>

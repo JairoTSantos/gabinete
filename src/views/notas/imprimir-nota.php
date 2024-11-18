@@ -44,10 +44,19 @@ if (isset($buscaCD['status']) && $buscaCD['status'] == 404) {
         background-image: none;
     }
 
+    /*h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        text-indent: 2em;
+    }
+
     #nota_texto_print p {
         text-indent: 5em;
         text-align: justify;
-    }
+    }*/
 </style>
 <div class="row">
     <div class="col-12">
