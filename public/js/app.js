@@ -13,7 +13,7 @@ $('#file-button').on('click', function () {
 
 $('#file-input').on('change', function () {
     var fileName = $(this).val().split('\\').pop();
-    $('#file-button').html(fileName ? '<i class="bi bi-check-circle"></i> Foto selecionada' : 'Nenhuma foto selecionada');
+    $('#file-button').html(fileName ? '<i class="bi bi-check-circle"></i> Ok!' : 'Nada foi enviado');
 });
 
 

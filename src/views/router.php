@@ -23,6 +23,8 @@ $rotas = [
     'profissao' => '../src/views/pessoas/editar-profissao.php',
     'nota' => '../src/views/notas/nota.php',
     'imprimir-nota' => '../src/views/notas/imprimir-nota.php',
+    'oficios' => '../src/views/oficios/oficios.php',
+
 ];
 
 if (array_key_exists($pagina, $rotas)) {
