@@ -27,7 +27,7 @@ $termo = (isset($_GET['termo'])) ? $_GET['termo'] : '';
         <div class="container-fluid p-2">
             <div class="card mb-2">
                 <div class="card-body p-1">
-                    <a class="btn btn-primary btn-sm custom-nav card-description" href="?pagina=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
+                    <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
                 </div>
             </div>
             <div class="card mb-2 card-description">
@@ -51,14 +51,21 @@ $termo = (isset($_GET['termo'])) ? $_GET['termo'] : '';
                             'arquivo' => $_FILES['arquivo']
                         ];
 
-                        $result = $oficioController->criarOficio($dados);
 
-                        if ($result['status'] == 'success') {
-                            echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '. Aguarde...</div>';
-                        } else if ($result['status'] == 'duplicated' || $result['status'] == 'bad_request') {
-                            echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
-                        } else if ($result['status'] == 'error') {
-                            echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        if (isset($dados['arquivo']) && $dados['arquivo']['error'] === 0) {
+                            $extensao = pathinfo($dados['arquivo']['name'], PATHINFO_EXTENSION);
+                            if (strtolower($extensao) !== 'pdf') {
+                                echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">Por favor, envie um arquivo no formato PDF.</div>';
+                            } else {
+                                $result = $oficioController->criarOficio($dados);
+                                if ($result['status'] == 'success') {
+                                    echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '. Aguarde...</div>';
+                                } else if ($result['status'] == 'duplicated' || $result['status'] == 'bad_request') {
+                                    echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                                } else if ($result['status'] == 'error') {
+                                    echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                                }
+                            }
                         }
                     }
                     ?>
@@ -134,6 +141,7 @@ $termo = (isset($_GET['termo'])) ? $_GET['termo'] : '';
                             <tbody>
                                 <?php
                                 $busca = $oficioController->listarOficios($ano_busca, $termo);
+
                                 if ($busca['status'] == 'success') {
                                     foreach ($busca['dados'] as $oficio) {
                                         echo '<tr>';

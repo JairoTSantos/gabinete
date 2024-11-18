@@ -5,12 +5,13 @@ include '../src/views/includes/verificaLogado.php';
 
 require_once '../vendor/autoload.php';
 
-
 use Jairosantos\GabineteDigital\Controllers\OrgaoController;
 use Jairosantos\GabineteDigital\Controllers\OficioController;
 
+
 $orgaoController = new OrgaoController();
 $oficioController = new OficioController();
+
 
 $oficioGet = $_GET['id'];
 
@@ -20,10 +21,7 @@ if ($buscaOficio['status'] == 'not_found' || is_integer($oficioGet) || $buscaOfi
     header('Location: ?secao=oficios');
 }
 
-
 ?>
-
-
 
 <div class="d-flex" id="wrapper">
     <?php include '../src/views/includes/sider_bar.php'; ?>
@@ -32,7 +30,7 @@ if ($buscaOficio['status'] == 'not_found' || is_integer($oficioGet) || $buscaOfi
         <div class="container-fluid p-2">
             <div class="card mb-2">
                 <div class="card-body p-1">
-                    <a class="btn btn-primary btn-sm custom-nav card-description" href="?pagina=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
+                    <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
                     <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=oficios" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
 
                 </div>
@@ -127,12 +125,23 @@ if ($buscaOficio['status'] == 'not_found' || is_integer($oficioGet) || $buscaOfi
                         <div class="col-md-5 col-12">
                             <button type="submit" class="btn btn-success btn-sm" name="btn_atualizar"><i class="bi bi-floppy-fill"></i> Salvar</button>
                             <button type="submit" class="btn btn-danger btn-sm" name="btn_apagar"><i class="bi bi-trash-fill"></i> Apagar</button>
-
+                            <a type="button" href="<?php echo $buscaOficio['dados'][0]['oficio_arquivo'] ?>" download target="_blank" class="btn btn-primary btn-sm"><i class="bi bi-cloud-arrow-down-fill"></i> Download</a>
                         </div>
                     </form>
                 </div>
             </div>
-
+            <div class="card mb-2">
+                <div class="card-body p-1">
+                    <?php
+                    $arquivo = $buscaOficio['dados'][0]['oficio_arquivo'];
+                    if (file_exists($arquivo)) {
+                        echo "<embed src='$arquivo' type='application/pdf' width='100%' height='1000px'>";
+                    } else {
+                        echo '<center><img src="public/img/loading.gif"/></center>';
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
