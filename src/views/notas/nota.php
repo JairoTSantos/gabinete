@@ -136,7 +136,6 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
                     }
                     ?>
                     <form class="row g-2 form_custom" method="POST">
-
                         <div class="col-md-6 col-12">
                             <input type="text" class="form-control form-control-sm" name="nota_titulo" placeholder="Título" value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['nota_titulo'] : ''  ?>" required>
                         </div>
@@ -162,9 +161,6 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
                                     }
                                 });
                             </script>
-
-
-
                             <textarea class="form-control form-control-sm" name="nota_texto" placeholder="Texto" rows="10"><?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['nota_texto'] : '' ?></textarea>
                         </div>
                         <div class="col-md-6 col-12">
