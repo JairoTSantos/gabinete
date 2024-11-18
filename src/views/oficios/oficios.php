@@ -19,7 +19,6 @@ $termo = (isset($_GET['termo'])) ? $_GET['termo'] : '';
 ?>
 
 
-
 <div class="d-flex" id="wrapper">
     <?php include '../src/views/includes/sider_bar.php'; ?>
     <div id="page-content-wrapper">
@@ -34,7 +33,7 @@ $termo = (isset($_GET['termo'])) ? $_GET['termo'] : '';
                 <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-file-earmark-text"></i> Ofícios</div>
                 <div class="card-body p-2">
                     <p class="card-text mb-2">Nesta seção, é possível adicionar e arquivar ofícios do sistema.</p>
-                    <p class="card-text mb-0">Todos os campos são obrigatórios</p>
+                    <p class="card-text mb-0">Todos os campos são obrigatórios. Somente arquivos <b>PDF</b></p>
                 </div>
             </div>
 

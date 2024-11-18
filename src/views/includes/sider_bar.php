@@ -4,6 +4,8 @@
         <p style="margin-left: 10px; margin-top:20px;font-weight: bolder;" class="text-muted"><i class="bi bi-list"></i> Gestão de pessoas</p>
         <a class="list-group-item list-group-item-action list-group-item-light px-4" href="?secao=orgaos"><i class="bi bi-building"></i> Órgãos e instituições</a>
         <a class="list-group-item list-group-item-action list-group-item-light px-4" href="?secao=pessoas"><i class="bi bi-people-fill"></i> Pessoas</a>
+        <p style="margin-left: 10px; margin-top:20px;font-weight: bolder;" class="text-muted"><i class="bi bi-list"></i> Gestão do gabinete</p>
+        <a class="list-group-item list-group-item-action list-group-item-light px-4" href="?secao=oficios"><i class="bi bi-file-earmark-text"></i> Ofícios</a>
     </div>
-    
+
 </div>
