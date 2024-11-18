@@ -1,6 +1,7 @@
 <?php
 
 namespace Jairosantos\GabineteDigital\Controllers;
+
 use Jairosantos\GabineteDigital\Core\UploadFile;
 
 use Jairosantos\GabineteDigital\Models\Oficio;
@@ -96,6 +97,19 @@ class OficioController {
             if (!isset($dados[$campo]) || empty($dados[$campo])) {
                 return ['status' => 'bad_request', 'message' => "O campo '$campo' é obrigatório."];
             }
+        }
+
+        if (isset($dados['arquivo']['tmp_name']) && !empty($dados['arquivo']['tmp_name'])) {
+            $uploadResult = $this->uploadFile->salvarArquivo($this->pasta_oficios, $dados['arquivo']);
+            if ($uploadResult['status'] == 'upload_ok') {
+                $dados['oficio_arquivo'] = $this->pasta_oficios . $uploadResult['filename'];
+            } else {
+                if ($uploadResult['status'] == 'error') {
+                    return ['status' => 'error', 'message' => 'Erro ao fazer upload.'];
+                }
+            }
+        } else {
+            $dados['oficio_arquivo'] = null;
         }
 
         try {

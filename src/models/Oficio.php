@@ -31,19 +31,33 @@ class Oficio {
     }
 
     public function atualizar($oficio_id, $dados) {
-        $query = "UPDATE oficios 
-                  SET oficio_titulo = :oficio_titulo, 
-                      oficio_resumo = :oficio_resumo, 
-                      oficio_arquivo = :oficio_arquivo, 
-                      oficio_ano = :oficio_ano,
-                      oficio_orgao = :oficio_orgao
-                  WHERE oficio_id = :oficio_id";
+
+
+        if (isset($dados['oficio_arquivo']) && !empty($dados['oficio_arquivo'])) {
+            $query = "UPDATE oficios 
+            SET oficio_titulo = :oficio_titulo, 
+                oficio_resumo = :oficio_resumo, 
+                oficio_arquivo = :oficio_arquivo, 
+                oficio_ano = :oficio_ano,
+                oficio_orgao = :oficio_orgao
+            WHERE oficio_id = :oficio_id";
+        } else {
+            $query = "UPDATE oficios 
+            SET oficio_titulo = :oficio_titulo, 
+                oficio_resumo = :oficio_resumo, 
+                oficio_ano = :oficio_ano,
+                oficio_orgao = :oficio_orgao
+            WHERE oficio_id = :oficio_id";
+        }
+
 
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':oficio_titulo', $dados['oficio_titulo']);
         $stmt->bindParam(':oficio_resumo', $dados['oficio_resumo']);
-        $stmt->bindParam(':oficio_arquivo', $dados['oficio_arquivo']);
+        if (isset($dados['oficio_arquivo']) && !empty($dados['oficio_arquivo'])) {
+            $stmt->bindParam(':oficio_arquivo', $dados['oficio_arquivo']);
+        }
         $stmt->bindParam(':oficio_ano', $dados['oficio_ano'], PDO::PARAM_INT);
         $stmt->bindParam(':oficio_orgao', $dados['oficio_orgao'], PDO::PARAM_INT);
         $stmt->bindParam(':oficio_id', $oficio_id, PDO::PARAM_INT);
