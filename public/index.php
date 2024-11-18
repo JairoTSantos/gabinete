@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" >
 
 <head>
     <meta charset="UTF-8">
@@ -29,7 +29,7 @@
     <script src="https://cdn.tiny.cloud/1/9ebpappotq2edw5qf3ik3e6m9owenjuy9buc8ddrbngfw88f/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 
-<body>
+<body data-bs-theme="dark">
 
     <?php include '../src/views/router.php' ?>
 
