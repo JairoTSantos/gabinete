@@ -19,7 +19,6 @@ class Oficio {
 
         $stmt = $this->conn->prepare($query);
 
-        // Bind dos parâmetros
         $stmt->bindParam(':oficio_titulo', $dados['oficio_titulo']);
         $stmt->bindParam(':oficio_resumo', $dados['oficio_resumo']);
         $stmt->bindParam(':oficio_arquivo', $dados['oficio_arquivo']);

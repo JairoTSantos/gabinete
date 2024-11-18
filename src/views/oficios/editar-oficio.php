@@ -33,6 +33,8 @@ if ($buscaOficio['status'] == 'not_found' || is_integer($oficioGet) || $buscaOfi
             <div class="card mb-2">
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?pagina=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
+                    <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=oficios" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
+
                 </div>
             </div>
             <div class="card mb-2 card-description">
@@ -68,6 +70,22 @@ if ($buscaOficio['status'] == 'not_found' || is_integer($oficioGet) || $buscaOfi
                             echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
                         } else if ($result['status'] == 'error') {
                             echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        }
+                    }
+
+
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_apagar'])) {
+                        $result = $oficioController->apagarOficio($oficioGet);
+                        if ($result['status'] == 'success') {
+                            echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '. Aguarde...</div>';
+                            echo '<script>
+                                setTimeout(function(){
+                                    window.location.href = "?secao=oficios";
+                                }, 1000);</script>';
+                        } else if ($result['status'] == 'duplicated' || $result['status'] == 'bad_request' || $result['status'] == 'invalid_email') {
+                            echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        } else if ($result['status'] == 'error') {
+                            echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="0" role="alert">' . $result['message'] . '</div>';
                         }
                     }
                     ?>
