@@ -36,6 +36,18 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
                     <p class="card-text mb-0">Todos os campos são obrigatórios</p>
                 </div>
             </div>
+            <div class="card mb-2 ">
+                <div class="card-body p-1">
+                    <?php
+                    if ($buscaNota['status'] == 'not_found' || is_integer($proposicaoGet) || $buscaNota['status'] == 'error') {
+                        echo '<a class="btn btn-success btn-sm custom-nav card-description" href="#" onclick="alert(&quot;Não existe nota para imprimir&quot;); return false;" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir nota</a>';
+                    } else {
+                        echo '<a class="btn btn-success btn-sm custom-nav card-description" href="?secao=imprimir-nota&proposicao=' . $proposicaoGet . '" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir nota</a>';
+                    }
+
+                    ?>
+                </div>
+            </div>
             <div class="card mb-2 card-description">
                 <div class="card-body p-2">
                     <?php
@@ -126,7 +138,7 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
                     <form class="row g-2 form_custom" method="POST">
 
                         <div class="col-md-6 col-12">
-                            <input type="text" class="form-control form-control-sm" name="nota_titulo" placeholder="Título" value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['nota_titulo'] : $proposicao_titulo . ' - '  ?>" required>
+                            <input type="text" class="form-control form-control-sm" name="nota_titulo" placeholder="Título" value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['nota_titulo'] : ''  ?>" required>
                         </div>
                         <div class="col-md-4 col-12">
                             <input type="text" class="form-control form-control-sm" name="nota_resumo" placeholder="Resumo" value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['nota_resumo'] : '' ?>" required>
@@ -138,10 +150,11 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
                             <script>
                                 tinymce.init({
                                     selector: 'textarea',
-                                    plugins: 'anchor autolink charmap codesample emoticons image  link lists media searchreplace table visualblocks wordcount',
-                                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image  media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                                    height: 1000,
+                                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount fullscreen',
+                                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | alignleft aligncenter alignright alignjustify | numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen',
+                                    height: 600,
                                     language: 'pt_BR',
+                                    content_css: "public/css/tinymce.css",
                                     setup: function(editor) {
                                         editor.on('init', function() {
                                             editor.getBody().style.fontSize = '10pt';
@@ -149,6 +162,9 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
                                     }
                                 });
                             </script>
+
+
+
                             <textarea class="form-control form-control-sm" name="nota_texto" placeholder="Texto" rows="10"><?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['nota_texto'] : '' ?></textarea>
                         </div>
                         <div class="col-md-6 col-12">

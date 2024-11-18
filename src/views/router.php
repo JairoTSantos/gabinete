@@ -1,6 +1,6 @@
 <?php
 
-$pagina = isset($_GET['secao']) ? $_GET['secao'] : 'home';
+$pagina = isset($_GET['secao']) ? $_GET['secao'] :  include '../src/views/404.php';;
 
 $rotas = [
     'home' => '../src/views/home/home.php',
@@ -22,6 +22,7 @@ $rotas = [
     'profissoes' => '../src/views/pessoas/profissoes.php',
     'profissao' => '../src/views/pessoas/editar-profissao.php',
     'nota' => '../src/views/notas/nota.php',
+    'imprimir-nota' => '../src/views/notas/imprimir-nota.php',
 ];
 
 if (array_key_exists($pagina, $rotas)) {
