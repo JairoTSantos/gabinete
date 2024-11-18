@@ -59,7 +59,7 @@ class Pessoa {
     public function atualizar($pessoa_id, $dados) {
 
 
-        if (isset($dados['usuario_foto']) && !empty($dados['usuario_foto'])) {
+        if (isset($dados['pessoa_foto']) && !empty($dados['pessoa_foto'])) {
             $query = "UPDATE pessoas SET 
             pessoa_nome = :pessoa_nome, pessoa_aniversario = :pessoa_aniversario, pessoa_email = :pessoa_email,
             pessoa_telefone = :pessoa_telefone, pessoa_endereco = :pessoa_endereco, pessoa_bairro = :pessoa_bairro, 
