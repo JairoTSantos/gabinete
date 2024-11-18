@@ -301,12 +301,11 @@ $filtro = isset($_GET['filtro']) ? ($_GET['filtro'] == '1' ? true : false) : fal
                                         echo '<td style="white-space: nowrap;">' . $pessoa['orgao_nome'] . '</td>';
                                         echo '<td style="white-space: nowrap;">' . $pessoa['pessoa_tipo_nome'] . '</td>';
                                         echo '<td style="white-space: nowrap;">' . $pessoa['pessoas_profissoes_nome'] . '</td>';
-
                                         echo '<td style="white-space: nowrap;">' . date('d/m/Y', strtotime($pessoa['pessoa_criada_em'])) . ' | ' . $pessoa['usuario_nome'] . '</td>';
                                         echo '</tr>';
                                     }
                                 } else if ($busca['status'] == 'empty') {
-                                    echo '<tr><td colspan="7">' . $busca['message'] . '</td></tr>';
+                                    echo '<tr><td colspan="9">' . $busca['message'] . '</td></tr>';
                                 } else if ($busca['status'] == 'error') {
                                     echo '<tr><td colspan="7">Erro ao carregar os dados.</td></tr>';
                                 }

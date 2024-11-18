@@ -160,10 +160,10 @@ if ($buscaPessoa['status'] == 'not_found' || is_integer($pessoaGet) || $buscaPes
                         </div>
                         <div class="col-md-2 col-12">
                             <select class="form-select form-select-sm" id="sexo" name="sexo" required>
-                                <option value="Sexo não informado" selected>Sexo não informado</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Feminino">Feminino</option>
-                                <option value="Outro">Outro</option>
+                                <option value="Sexo não informado" <?= $buscaPessoa['dados'][0]['pessoa_sexo'] == 1 ? 'selected' : '' ?>>Sexo não informado</option>
+                                <option value="Masculino" <?= $buscaPessoa['dados'][0]['pessoa_sexo'] == 'Masculino' ? 'selected' : '' ?>>Masculino</option>
+                                <option value="Feminino" <?= $buscaPessoa['dados'][0]['pessoa_sexo'] == 'Feminino' ? 'selected' : '' ?>>Feminino</option>
+                                <option value="Outro" <?= $buscaPessoa['dados'][0]['pessoa_sexo'] == 'Outro' ? 'selected' : '' ?>>Outro</option>
                             </select>
                         </div>
                         <div class="col-md-2 col-4">
