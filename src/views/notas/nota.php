@@ -15,6 +15,10 @@ $proposicaoGet = isset($_GET['proposicao']) ? $_GET['proposicao'] : null;
 
 $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $proposicaoGet);
 
+$buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet);
+
+$buscaAutorCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet . '/autores');
+
 
 ?>
 
@@ -51,7 +55,6 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
             <div class="card mb-2 card-description">
                 <div class="card-body p-2">
                     <?php
-                    $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet);
 
                     if (isset($buscaCD['status']) && $buscaCD['status'] == 404) {
                         echo 'Proposição não localizada';
@@ -63,7 +66,18 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
 
                     <h5 class="card-title mb-2"><?php echo $proposicao_titulo ?></h5>
                     <p class="card-text mb-2"><em><?php echo $buscaCD['dados']['ementa'] ?></em></p>
-                    <p class="card-text mb-2">Data de apresentação: <?php echo date('d/m', strtotime($buscaCD['dados']['dataApresentacao'])) ?> <?php echo ($buscaCD['dados']['statusProposicao']['descricaoSituacao'] == 'Arquivada') ? ' | <i class="bi bi-info-circle-fill"></i> <b>Arquivada</b>' : '' ?> </p>
+
+                    <?php
+
+                    foreach ($buscaAutorCD['dados'] as $autor) {
+                        if ($autor['proponente'] == 1) {
+                            echo '<p class="card-text mb-2"><i class="bi bi-person"></i> Autor: '.$autor['nome'].'</p>';
+                        }
+                    }
+
+                    ?>
+
+                    <p class="card-text mb-2"><i class="bi bi-calendar"></i> Data de apresentação: <?php echo date('d/m', strtotime($buscaCD['dados']['dataApresentacao'])) ?> <?php echo ($buscaCD['dados']['statusProposicao']['descricaoSituacao'] == 'Arquivada') ? ' | <i class="bi bi-info-circle-fill"></i> <b>Arquivada</b>' : '' ?> </p>
                     <p class="card-text mb-2"><a href="<?php echo $buscaCD['dados']['urlInteiroTeor'] ?>" target="_blank"><i class="bi bi-file-earmark"></i> Ver inteiro teor</a></p>
                     <p class="card-text mb-0"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=<?php echo $buscaCD['dados']['id']  ?>" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Página da CD</a></p>
                 </div>
@@ -143,7 +157,7 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
                             <input type="text" class="form-control form-control-sm" name="nota_resumo" placeholder="Resumo" value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['nota_resumo'] : '' ?>" required>
                         </div>
                         <div class="col-md-2 col-12">
-                            <input type="text" class="form-control form-control-sm" disabled value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['usuario_nome'].' | '.date('d/m - H:i', strtotime($buscaNota['dados'][0]['nota_criada_em'])) : '' ?>" required>
+                            <input type="text" class="form-control form-control-sm" disabled value="<?php echo ($buscaNota['status'] != 'not_found') ? $buscaNota['dados'][0]['usuario_nome'] . ' | ' . date('d/m - H:i', strtotime($buscaNota['dados'][0]['nota_criada_em'])) : '' ?>" required>
                         </div>
                         <div class="col-md-12 col-12">
                             <script>

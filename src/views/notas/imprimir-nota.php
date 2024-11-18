@@ -21,6 +21,10 @@ $proposicaoGet = isset($_GET['proposicao']) ? $_GET['proposicao'] : null;
 
 $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $proposicaoGet);
 
+if ($buscaNota['status'] == 'not_found' || is_integer($proposicaoGet) || $buscaNota['status'] == 'error') {
+    header('Location: ?secao=home');
+    exit();
+}
 
 $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet);
 
@@ -44,19 +48,10 @@ if (isset($buscaCD['status']) && $buscaCD['status'] == 404) {
         background-image: none;
     }
 
-    /*h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        text-indent: 2em;
-    }
-
     #nota_texto_print p {
         text-indent: 5em;
         text-align: justify;
-    }*/
+    }
 </style>
 <div class="row">
     <div class="col-12">
