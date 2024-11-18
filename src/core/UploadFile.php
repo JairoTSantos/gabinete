@@ -4,10 +4,7 @@ namespace Jairosantos\GabineteDigital\Core;
 
 class UploadFile {
 
-    private $appConfig;
-
-   
-
+    
     public function salvarArquivo($pasta, $arquivo) {
         if (!file_exists($pasta)) {
             mkdir($pasta, 0755, true);

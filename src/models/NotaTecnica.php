@@ -28,13 +28,13 @@ class NotaTecnica {
         return $stmt->execute();
     }
 
-    public function atualizar($nota_id, $dados) {
+    public function atualizar($nota_proposicao, $dados) {
         $query = "UPDATE notas_tecnicas 
                   SET nota_proposicao = :nota_proposicao, 
                       nota_titulo = :nota_titulo, 
                       nota_resumo = :nota_resumo, 
                       nota_texto = :nota_texto
-                  WHERE nota_id = :nota_id";
+                  WHERE nota_proposicao = :nota_proposicao";
 
         $stmt = $this->conn->prepare($query);
 
@@ -42,7 +42,7 @@ class NotaTecnica {
         $stmt->bindParam(':nota_titulo', $dados['nota_titulo']);
         $stmt->bindParam(':nota_resumo', $dados['nota_resumo']);
         $stmt->bindParam(':nota_texto', $dados['nota_texto']);
-        $stmt->bindParam(':nota_id', $nota_id, PDO::PARAM_INT);
+        $stmt->bindParam(':nota_proposicao', $nota_proposicao, PDO::PARAM_INT);
 
         return $stmt->execute();
     }
@@ -66,11 +66,11 @@ class NotaTecnica {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function apagar($nota_id) {
-        $query = "DELETE FROM notas_tecnicas WHERE nota_id = :nota_id";
+    public function apagar($nota_proposicao) {
+        $query = "DELETE FROM notas_tecnicas WHERE nota_proposicao = :nota_proposicao";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':nota_id', $nota_id, PDO::PARAM_INT);
+        $stmt->bindParam(':nota_proposicao', $nota_proposicao, PDO::PARAM_INT);
 
         return $stmt->execute();
     }
