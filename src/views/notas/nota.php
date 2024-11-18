@@ -44,11 +44,10 @@ $buscaAutorCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/pro
                 <div class="card-body p-1">
                     <?php
                     if ($buscaNota['status'] == 'not_found' || is_integer($proposicaoGet) || $buscaNota['status'] == 'error') {
-                        echo '<a class="btn btn-success btn-sm custom-nav card-description" href="#" onclick="alert(&quot;Não existe nota para imprimir&quot;); return false;" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir nota</a>';
+                        echo '<button class="btn btn-success btn-sm custom-nav card-description" disabled role="button"><i class="bi bi-printer-fill"></i> Imprimir nota</button>';
                     } else {
                         echo '<a class="btn btn-success btn-sm custom-nav card-description" href="?secao=imprimir-nota&proposicao=' . $proposicaoGet . '" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir nota</a>';
                     }
-
                     ?>
                 </div>
             </div>
@@ -71,7 +70,7 @@ $buscaAutorCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/pro
 
                     foreach ($buscaAutorCD['dados'] as $autor) {
                         if ($autor['proponente'] == 1) {
-                            echo '<p class="card-text mb-2"><i class="bi bi-person"></i> Autor: '.$autor['nome'].'</p>';
+                            echo '<p class="card-text mb-2"><i class="bi bi-person"></i> Autor: ' . $autor['nome'] . '</p>';
                         }
                     }
 
