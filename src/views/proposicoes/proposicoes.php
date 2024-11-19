@@ -90,7 +90,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                             <thead>
                                 <tr>
                                     <th scope="col">Proposição</th>
-                                    <th scope="col">Ementa</th>
+                                    <th scope="col">Ementa/Resumo</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,13 +106,15 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
 
                                         if ($nota['status'] == 'success') {
                                             $apelido = $nota['dados'][0]['nota_titulo'] . '<br>';
+                                            $ementa = $nota['dados'][0]['nota_resumo'];
                                         } else {
                                             $apelido = '';
+                                            $ementa = $proposicao['proposicao_ementa'];
                                         }
 
                                         echo '<tr>';
                                         echo '<td style="white-space: nowrap; justify-content: center; align-items: center;"><a href="?secao=nota&proposicao=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
-                                        echo '<td style="justify-content: center; align-items: center;"><b>' . $apelido . '</b>' . $proposicao['proposicao_ementa'] . '</td>';
+                                        echo '<td style="justify-content: center; align-items: center;"><b>' . $apelido . '</b>' . $ementa . '</td>';
                                         echo '</tr>';
                                     }
                                 } else if ($buscaProposicoes['status'] == 'empty' || $buscaProposicoes['status'] == 'error') {

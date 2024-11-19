@@ -62,7 +62,7 @@ if (isset($buscaCD['status']) && $buscaCD['status'] == 404) {
                 <p class="card-text mb-4 text-center" style="font-size: 1em;">Gabinete do Deputado <?php echo $_ENV['NOME_DEPUTADO'] ?></p>
                 <p class="card-text mb-2 mt-4 text-center" style="font-size: 1.4em;"><b><?php echo $buscaCD['dados']['siglaTipo'] . ' ' . $buscaCD['dados']['numero'] . '/' . $buscaCD['dados']['ano'] ?></b> </p>
                 <p class="card-text mb-2 text-center" style="font-size: 1.2em;"><b><?php echo $buscaNota['dados'][0]['nota_titulo'] ?></b></p>
-                <p class="card-text mb-4 text-center style=" font-size: 1.2em;">(<?php echo $buscaNota['dados'][0]['nota_resumo'] ?>)</p>
+                <p class="card-text mb-4 text-center style=" font-size: 1.2em;"><?php echo $buscaNota['dados'][0]['nota_resumo'] ?></p>
                 <p class="card-text mb-0 text-center" style="font-size: 1.3em;"><b>Nota técnica</b></p>
                 <p class="card-text mb-4 text-center" style="font-size: 0.8em;">criada por (<?php echo $buscaNota['dados'][0]['usuario_nome'] ?>)</p>
                 <p class="card-text">
