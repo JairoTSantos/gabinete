@@ -5,6 +5,12 @@ namespace Jairosantos\GabineteDigital\Models;
 use Jairosantos\GabineteDigital\Core\Database;
 use PDO;
 
+use Dotenv\Dotenv;
+
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
 class Proposicao {
     private $conn;
 
@@ -43,7 +49,6 @@ class Proposicao {
         return true;
     }
 
-
     public function inserirProposicaoAutor($dados) {
 
         $ano = $dados[0]['proposicao_autor_ano'];
@@ -71,5 +76,44 @@ class Proposicao {
         }
 
         return true;
+    }
+
+    public function proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo) {
+        $pagina = $pagina;
+        $itens = $itens;
+        $offset = ($pagina - 1) * $itens;
+        $assinatura = 1;
+        $proponente = 1;
+
+        if (empty($termo)) {
+            if (empty($tipo)) {
+                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+            } else {
+                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+            }
+        } else {
+            if (empty($tipo)) {
+                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+            } else {
+                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+            }
+        }
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':proposicao_autor_id', $_ENV['ID_DEPUTADO'], PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':itens', $itens, PDO::PARAM_INT);
+        $stmt->bindValue(':termo', '%' . $termo . '%', PDO::PARAM_STR);
+        if (!empty($ano) && empty($termo)) {
+            $stmt->bindValue(':ano', $ano, PDO::PARAM_INT);
+        }
+        if (!empty($tipo)) {
+            $stmt->bindValue(':tipo', $tipo, PDO::PARAM_STR);
+        }
+        $stmt->bindValue(':assinatura', $assinatura, PDO::PARAM_INT);
+        $stmt->bindValue(':proponente', $proponente, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

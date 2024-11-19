@@ -1,0 +1,12 @@
+2024-11-19 14:58:22SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1 LIMIT 0, 1' at line 1
+2024-11-19 14:58:57SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1 LIMIT 0, 10' at line 1
+2024-11-19 15:00:08SQLSTATE[42S22]: Column not found: 1054 Unknown column 'data' in 'order clause'
+2024-11-19 15:00:18SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2024-11-19 15:00:29SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1 LIMIT 0, 10' at line 1
+2024-11-19 15:00:59SQLSTATE[42S22]: Column not found: 1054 Unknown column 'proposicao_id' in 'order clause'
+2024-11-19 15:02:54SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'proposicao_id LIMIT 0, 10' at line 1
+2024-11-19 15:04:06SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'view_proposicao'
+2024-11-19 15:05:02SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'view_proposicao'
+2024-11-19 15:52:48SQLSTATE[42S22]: Column not found: 1054 Unknown column 'proposicao_assinatura' in 'where clause'
+2024-11-19 15:56:11SQLSTATE[42S22]: Column not found: 1054 Unknown column 'proposicao_assinatura' in 'where clause'
+2024-11-19 15:57:34SQLSTATE[42S22]: Column not found: 1054 Unknown column 'proposicao_assinatura' in 'where clause'

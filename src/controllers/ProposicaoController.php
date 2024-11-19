@@ -7,6 +7,8 @@ use Jairosantos\GabineteDigital\Models\Proposicao;
 use Jairosantos\GabineteDigital\Core\GetJson;
 use PDOException;
 
+
+
 class ProposicaoController {
     private $proposicaoModel;
     private $logger;
@@ -72,6 +74,24 @@ class ProposicaoController {
             $this->proposicaoModel->inserirProposicaoAutor($dados);
 
             return ['status' => 'success', 'message' => $contador . ' proposições do ano de ' . $ano . ' inseridas com sucesso.'];
+        } catch (PDOException $e) {
+            $this->logger->novoLog('proposicao_error', $e->getMessage());
+            return ['status' => 'error', 'message' => 'Erro interno do servidor'];
+        }
+    }
+
+    public function proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo) {
+        try {
+            $proposicoes = $this->proposicaoModel->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo);
+
+            if (empty($proposicoes)) {
+                return ['status' => 'empty',  'message' => 'Nenhuma proposição encontrada'];
+            }
+
+            $total = (isset($proposicoes[0]['total'])) ? $proposicoes[0]['total'] : 0;
+            $totalPaginas = ceil($total / $itens);
+
+            return ['status' => 'success', 'dados' => $proposicoes, 'total_paginas' => $totalPaginas];
         } catch (PDOException $e) {
             $this->logger->novoLog('proposicao_error', $e->getMessage());
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
