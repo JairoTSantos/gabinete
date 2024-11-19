@@ -37,7 +37,7 @@ class ProposicaoController {
                     'proposicao_tipo' => $proposicao['siglaTipo'],
                     'proposicao_ementa' => $proposicao['ementa'],
                     'proposicao_apresentacao' => $proposicao['dataApresentacao'],
-                    'proposicao_arquivada' => 0
+                    'proposicao_arquivada' => ($proposicao['ultimoStatus']['idSituacao'] == 923 || $proposicao['ultimoStatus']['idSituacao'] == 1140) ? 1 : 0
                 ];
             }
 
@@ -80,9 +80,9 @@ class ProposicaoController {
         }
     }
 
-    public function proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo) {
+    public function proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada) {
         try {
-            $proposicoes = $this->proposicaoModel->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo);
+            $proposicoes = $this->proposicaoModel->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada);
 
             if (empty($proposicoes)) {
                 return ['status' => 'empty',  'message' => 'Nenhuma proposição encontrada'];

@@ -166,7 +166,7 @@ $buscaAutorCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/pro
                                     selector: 'textarea',
                                     plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount fullscreen',
                                     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | alignleft aligncenter alignright alignjustify | numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen',
-                                    height: 600,
+                                    height: 400,
                                     language: 'pt_BR',
                                     content_css: "public/css/tinymce.css",
                                     setup: function(editor) {

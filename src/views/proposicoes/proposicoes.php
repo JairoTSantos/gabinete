@@ -15,6 +15,8 @@ $proposicaoController = new ProposicaoController();
 $notaController = new NotaTecnicaController();
 
 $itens = isset($_GET['itens']) ? (int) $_GET['itens'] : 10;
+$arquivada = isset($_GET['arquivada']) ? (int) $_GET['arquivada'] : 0;
+
 $ano = isset($_GET['ano']) ? (int) $_GET['ano'] : date('Y');
 $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'PL';
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
@@ -72,6 +74,13 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                         <option value="PRL" <?php echo $tipo == 'PRL' ? 'selected' : ''; ?>>PRL</option>
                                     </select>
                                 </div>
+                                <div class="col-md-1 col-12">
+                                    <select class="form-select form-select-sm" name="arquivada" required>
+                                        <option value="1" <?php echo $arquivada == 1 ? 'selected' : ''; ?>>Arquivadas</option>
+                                        <option value="0" <?php echo $arquivada == 0 ? 'selected' : ''; ?>>Em tramitação</option>
+                                       
+                                    </select>
+                                </div>
                                 <div class="col-md-3 col-10">
                                     <input type="text" class="form-control form-control-sm" name="termo" placeholder="Buscar..." value="<?php echo $termo ?>">
                                 </div>
@@ -97,7 +106,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
 
                                 <?php
 
-                                $buscaProposicoes = $proposicaoController->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo);
+                                $buscaProposicoes = $proposicaoController->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada);
                                
                                 if ($buscaProposicoes['status'] == 'success') {
                                     foreach ($buscaProposicoes['dados'] as $proposicao) {
@@ -135,14 +144,14 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
 
                     if ($totalPagina > 0 && $totalPagina != 1) {
                         echo '<ul class="pagination custom-pagination mt-2 mb-0">';
-                        echo '<li class="page-item ' . ($pagina == 1 ? 'active' : '') . '"><a class="page-link" href="?secao=proposicoes&itens=' . $itens . '&tipo=' . $tipo . '&ano=' . $ano . '&pagina=1&ordenarPor=' . $ordenarPor . '&ordem=' . $ordem . (isset($termo) ? '&termo=' . $termo : '') . '">Primeira</a></li>';
+                        echo '<li class="page-item ' . ($pagina == 1 ? 'active' : '') . '"><a class="page-link" href="?secao=proposicoes&itens=' . $itens . '&tipo=' . $tipo . '&ano=' . $ano . '&arquivada=' . $arquivada . '&pagina=1&ordenarPor=' . $ordenarPor . '&ordem=' . $ordem . (isset($termo) ? '&termo=' . $termo : '') . '">Primeira</a></li>';
 
                         for ($i = 1; $i < $totalPagina - 1; $i++) {
                             $pageNumber = $i + 1;
-                            echo '<li class="page-item ' . ($pagina == $pageNumber ? 'active' : '') . '"><a class="page-link" href="?secao=proposicoes&itens=' . $itens . '&tipo=' . $tipo . '&ano=' . $ano . '&pagina=' . $pageNumber . '&ordenarPor=' . $ordenarPor . '&ordem=' . $ordem . (isset($termo) ? '&termo=' . $termo : '') . '">' . $pageNumber . '</a></li>';
+                            echo '<li class="page-item ' . ($pagina == $pageNumber ? 'active' : '') . '"><a class="page-link" href="?secao=proposicoes&itens=' . $itens . '&tipo=' . $tipo . '&ano=' . $ano . '&arquivada=' . $arquivada . '&pagina=' . $pageNumber . '&ordenarPor=' . $ordenarPor . '&ordem=' . $ordem . (isset($termo) ? '&termo=' . $termo : '') . '">' . $pageNumber . '</a></li>';
                         }
 
-                        echo '<li class="page-item ' . ($pagina == $totalPagina ? 'active' : '') . '"><a class="page-link" href="?secao=proposicoes&itens=' . $itens . '&tipo=' . $tipo . '&ano=' . $ano . '&pagina=' . $totalPagina . '&ordenarPor=' . $ordenarPor . '&ordem=' . $ordem . (isset($termo) ? '&termo=' . $termo : '') . '">Última</a></li>';
+                        echo '<li class="page-item ' . ($pagina == $totalPagina ? 'active' : '') . '"><a class="page-link" href="?secao=proposicoes&itens=' . $itens . '&tipo=' . $tipo . '&ano=' . $ano . '&arquivada=' . $arquivada . '&pagina=' . $totalPagina . '&ordenarPor=' . $ordenarPor . '&ordem=' . $ordem . (isset($termo) ? '&termo=' . $termo : '') . '">Última</a></li>';
                         echo '</ul>';
                     }
                     ?>

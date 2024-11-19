@@ -77,24 +77,25 @@ class Proposicao {
         return true;
     }
 
-    public function proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo) {
+    public function proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada) {
         $pagina = $pagina;
         $itens = $itens;
         $offset = ($pagina - 1) * $itens;
         $assinatura = 1;
         $proponente = 1;
+        
 
         if (empty($termo)) {
             if (empty($tipo)) {
-                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_arquivada = :arquivada AND proposicao_autor_id = :proposicao_autor_id AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_arquivada = :arquivada AND proposicao_autor_id = :proposicao_autor_id AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
             } else {
-                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_arquivada = :arquivada AND proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_arquivada = :arquivada AND proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND proposicao_ano = :ano AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
             }
         } else {
             if (empty($tipo)) {
-                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_arquivada = :arquivada AND proposicao_autor_id = :proposicao_autor_id AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_arquivada = :arquivada AND proposicao_autor_id = :proposicao_autor_id AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
             } else {
-                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
+                $query = "SELECT view_proposicoes.*, (SELECT COUNT(*) FROM view_proposicoes WHERE proposicao_arquivada = :arquivada AND proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente) as total FROM view_proposicoes WHERE proposicao_arquivada = :arquivada AND proposicao_autor_id = :proposicao_autor_id AND proposicao_tipo = :tipo AND (proposicao_ementa LIKE :termo OR :termo = '') AND proposicao_autor_assinatura = :assinatura AND proposicao_autor_proponente = :proponente ORDER BY $ordenarPor $ordem LIMIT :offset, :itens";
             }
         }
 
@@ -102,6 +103,7 @@ class Proposicao {
         $stmt->bindParam(':proposicao_autor_id', $_ENV['ID_DEPUTADO'], PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->bindValue(':itens', $itens, PDO::PARAM_INT);
+        $stmt->bindValue(':arquivada', $arquivada, PDO::PARAM_INT);
         $stmt->bindValue(':termo', '%' . $termo . '%', PDO::PARAM_STR);
         if (!empty($ano) && empty($termo)) {
             $stmt->bindValue(':ano', $ano, PDO::PARAM_INT);
