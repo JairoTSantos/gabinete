@@ -4,7 +4,6 @@ include '../src/views/includes/verificaLogado.php';
 
 require_once '../vendor/autoload.php';
 
-
 use Jairosantos\GabineteDigital\Controllers\ProposicaoController;
 
 $proposicaoController = new ProposicaoController();
@@ -42,7 +41,7 @@ $proposicaoController = new ProposicaoController();
                                 $result = $proposicaoController->inserirProposicoes($ano_proposicao);
 
                                 if ($result['status'] == 'success') {
-                                    echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                                    echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="0" role="alert">' . $result['message'] . '</div>';
                                 } else if ($result['status'] == 'error') {
                                     echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="0" role="alert">' . $result['message'] . '</div>';
                                 }
@@ -80,7 +79,7 @@ $proposicaoController = new ProposicaoController();
                                 $result = $proposicaoController->inserirProposicoesAutores($ano_proposicao_autores);
 
                                 if ($result['status'] == 'success') {
-                                    echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                                    echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="0" role="alert">' . $result['message'] . '</div>';
                                 } else if ($result['status'] == 'error') {
                                     echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="0" role="alert">' . $result['message'] . '</div>';
                                 }
