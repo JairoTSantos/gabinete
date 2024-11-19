@@ -19,9 +19,6 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
 
 $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet);
 
-
-
-
 ?>
 
 
@@ -76,7 +73,6 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
                     $buscaAutorCD = $proposicaoController->buscarAutores($proposicaoGet);
 
                     if ($buscaAutorCD['status'] == 'success') {
-
                         foreach ($buscaAutorCD['dados'] as $autor) {
                             if ($autor['proposicao_autor_proponente'] == 1) {
                                 echo '<p class="card-text mb-0"><i class="bi bi-person"></i> ' . $autor['proposicao_autor_nome'] . ' - ' . ($autor['proposicao_autor_partido'] ? $autor['proposicao_autor_partido'] : "") . '/' . ($autor['proposicao_autor_estado'] ? $autor['proposicao_autor_estado'] : "") . '</p>';
@@ -88,7 +84,7 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
 
                     <p class="card-text mb-2 mt-3"><i class="bi bi-calendar"></i> Data de apresentação: <?php echo date('d/m', strtotime($buscaCD['dados']['dataApresentacao'])) ?> <?php echo ($buscaCD['dados']['statusProposicao']['descricaoSituacao'] == 'Arquivada') ? ' | <i class="bi bi-info-circle-fill"></i> <b>Arquivada</b>' : '' ?> </p>
                     <p class="card-text mb-0 mt-3"><a href="<?php echo $buscaCD['dados']['urlInteiroTeor'] ?>" target="_blank"><i class="bi bi-file-earmark"></i> Ver inteiro teor</a></p>
-                    <p class="card-text mb-3"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=<?php echo $buscaCD['dados']['id']  ?>" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Página da CD</a></p>
+                    <p class="card-text mb-0"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=<?php echo $buscaCD['dados']['id']  ?>" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Página da CD</a></p>
 
                     <?php
                     $busca_prinicipal = $proposicaoController->buscarUltimaProposicao($proposicaoGet);
@@ -100,7 +96,7 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
                 </div>
             </div>
 
-            <div class="card mb-2 card-description">
+            <div class="card mb-2">
                 <div class="card-body p-2">
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered table-striped mb-0 custom-table">

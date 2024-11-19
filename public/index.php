@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" >
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -35,7 +35,7 @@
 
     <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/startbootstrap-simple-sidebar-master/dist/js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="vendor/jquery-mask/jquery.mask.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 
