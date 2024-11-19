@@ -79,6 +79,7 @@ class ProposicaoController {
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
         }
     }
+    
 
     public function proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada) {
         try {
@@ -96,5 +97,60 @@ class ProposicaoController {
             $this->logger->novoLog('proposicao_error', $e->getMessage());
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
         }
+    }
+
+
+    public function buscarAutores($id) {
+        try {
+            $autores = $this->proposicaoModel->buscarAutores($id);
+
+            if (empty($autores)) {
+                return ['status' => 'empty',  'message' => 'Nenhum autor encontrado'];
+            }
+
+            return ['status' => 'success', 'dados' => $autores];
+        } catch (PDOException $e) {
+            $this->logger->novoLog('proposicao_error', $e->getMessage());
+            return ['status' => 'error', 'message' => 'Erro interno do servidor'];
+        }
+    }
+
+
+
+    public function buscarUltimaProposicao($id) {
+        $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $id;
+        $primeiroResultado = null;
+        $ultimoResultado = null;
+
+        do {
+            $resposta = $this->getjson->getJson($url);
+
+            if (isset($resposta['dados'])) {
+                $dados = $resposta['dados'];
+
+                // Armazena o primeiro resultado
+                if (!$primeiroResultado) {
+                    $primeiroResultado = $dados;
+                }
+
+                $ultimoResultado = $dados;
+
+                // Verifica se há uma URI de proposição principal
+                if (!empty($dados['uriPropPrincipal'])) {
+                    $url = $dados['uriPropPrincipal'];
+                } else {
+                    $url = null;
+                }
+            } else {
+                break;
+            }
+        } while ($url);
+
+        // Se o último resultado for igual ao primeiro, retorna vazio
+        if ($ultimoResultado === $primeiroResultado) {
+            return ['status' => 'empty', 'dados' => []];
+        }
+
+        return ['status' => 'success', 'dados' => $ultimoResultado];
     }
 }

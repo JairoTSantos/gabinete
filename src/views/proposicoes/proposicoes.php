@@ -52,10 +52,21 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                 <div class="col-md-1 col-12">
                                     <input type="text" class="form-control form-control-sm" name="ano" placeholder="Ano" data-mask="0000" value="<?php echo $ano ?>">
                                 </div>
-                                <div class="col-md-2 col-6">
-                                    <select class="form-select form-select-sm" name="ordem" required>
-                                        <option value="asc" <?php echo $ordem == 'asc' ? 'selected' : ''; ?>>Ordem Crescente</option>
-                                        <option value="desc" <?php echo $ordem == 'desc' ? 'selected' : ''; ?>>Ordem Decrescente</option>
+                               
+                               
+                                <div class="col-md-1 col-12">
+                                    <select class="form-select form-select-sm" name="tipo" required>
+                                        <option value="PL" <?php echo $tipo == 'PL' ? 'selected' : ''; ?>>PL</option>
+                                        <option value="PEC" <?php echo $tipo == 'PEC' ? 'selected' : ''; ?>>PEC</option>
+                                        <option value="REQ" <?php echo $tipo == 'REQ' ? 'selected' : ''; ?>>REQ</option>
+                                        <option value="PRL" <?php echo $tipo == 'PRL' ? 'selected' : ''; ?>>PRL</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 col-12">
+                                    <select class="form-select form-select-sm" name="arquivada" required>
+                                        <option value="1" <?php echo $arquivada == 1 ? 'selected' : ''; ?>>Arquivadas</option>
+                                        <option value="0" <?php echo $arquivada == 0 ? 'selected' : ''; ?>>Em tramitação</option>
+                                       
                                     </select>
                                 </div>
                                 <div class="col-md-2 col-6">
@@ -66,19 +77,10 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                         <option value="50" <?php echo $itens == 50 ? 'selected' : ''; ?>>50 itens</option>
                                     </select>
                                 </div>
-                                <div class="col-md-1 col-12">
-                                    <select class="form-select form-select-sm" name="tipo" required>
-                                        <option value="PL" <?php echo $tipo == 'PL' ? 'selected' : ''; ?>>PL</option>
-                                        <option value="PEC" <?php echo $tipo == 'PEC' ? 'selected' : ''; ?>>PEC</option>
-                                        <option value="REQ" <?php echo $tipo == 'REQ' ? 'selected' : ''; ?>>REQ</option>
-                                        <option value="PRL" <?php echo $tipo == 'PRL' ? 'selected' : ''; ?>>PRL</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-1 col-12">
-                                    <select class="form-select form-select-sm" name="arquivada" required>
-                                        <option value="1" <?php echo $arquivada == 1 ? 'selected' : ''; ?>>Arquivadas</option>
-                                        <option value="0" <?php echo $arquivada == 0 ? 'selected' : ''; ?>>Em tramitação</option>
-                                       
+                                <div class="col-md-2 col-6">
+                                    <select class="form-select form-select-sm" name="ordem" required>
+                                        <option value="asc" <?php echo $ordem == 'asc' ? 'selected' : ''; ?>>Ordem Crescente</option>
+                                        <option value="desc" <?php echo $ordem == 'desc' ? 'selected' : ''; ?>>Ordem Decrescente</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 col-10">

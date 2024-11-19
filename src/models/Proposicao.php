@@ -117,4 +117,14 @@ class Proposicao {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function buscarAutores($id){
+
+        $query = 'SELECT * FROM proposicoes_autores WHERE proposicao_id = :id';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
 }

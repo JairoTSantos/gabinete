@@ -5,20 +5,19 @@ include '../src/views/includes/verificaLogado.php';
 require_once '../vendor/autoload.php';
 
 use Jairosantos\GabineteDigital\Controllers\NotaTecnicaController;
+use Jairosantos\GabineteDigital\Controllers\ProposicaoController;
 use Jairosantos\GabineteDigital\Core\GetJson;
 
 $getjson = new GetJson();
 
 $notaTecnicaController = new NotaTecnicaController;
+$proposicaoController = new ProposicaoController;
 
 $proposicaoGet = isset($_GET['proposicao']) ? $_GET['proposicao'] : null;
 
 $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $proposicaoGet);
 
 $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet);
-
-$buscaAutorCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet . '/autores');
-
 
 ?>
 
@@ -30,8 +29,8 @@ $buscaAutorCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/pro
         <div class="container-fluid p-2">
             <div class="card mb-2">
                 <div class="card-body p-1">
-                    <a class="btn btn-primary btn-sm custom-nav card-description" href="?pagina=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
-                    <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=proposicoes" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
+                    <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
+                    <a class="btn btn-success btn-sm custom-nav card-description" href="#" onclick="history.back(-1)" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
 
                 </div>
             </div>
@@ -66,21 +65,36 @@ $buscaAutorCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/pro
                     ?>
 
                     <h5 class="card-title mb-2"><?php echo $proposicao_titulo ?></h5>
-                    <p class="card-text mb-2"><em><?php echo $buscaCD['dados']['ementa'] ?></em></p>
+                    <p class="card-text mb-3"><em><?php echo $buscaCD['dados']['ementa'] ?></em></p>
+
+
 
                     <?php
 
-                    foreach ($buscaAutorCD['dados'] as $autor) {
-                        if ($autor['proponente'] == 1) {
-                            echo '<p class="card-text mb-2"><i class="bi bi-person"></i> Autor: ' . $autor['nome'] . '</p>';
+                    $buscaAutorCD = $proposicaoController->buscarAutores($proposicaoGet);
+
+                    if ($buscaAutorCD['status'] == 'success') {
+
+                        foreach ($buscaAutorCD['dados'] as $autor) {
+                            if ($autor['proposicao_autor_proponente'] == 1) {
+                                echo '<p class="card-text mb-0"><i class="bi bi-person"></i> ' . $autor['proposicao_autor_nome'] . ' - ' . ($autor['proposicao_autor_partido'] ? $autor['proposicao_autor_partido'] : "") . '/' . ($autor['proposicao_autor_estado'] ? $autor['proposicao_autor_estado'] : "") . '</p>';
+                            }
                         }
                     }
 
                     ?>
 
-                    <p class="card-text mb-2"><i class="bi bi-calendar"></i> Data de apresentação: <?php echo date('d/m', strtotime($buscaCD['dados']['dataApresentacao'])) ?> <?php echo ($buscaCD['dados']['statusProposicao']['descricaoSituacao'] == 'Arquivada') ? ' | <i class="bi bi-info-circle-fill"></i> <b>Arquivada</b>' : '' ?> </p>
-                    <p class="card-text mb-2"><a href="<?php echo $buscaCD['dados']['urlInteiroTeor'] ?>" target="_blank"><i class="bi bi-file-earmark"></i> Ver inteiro teor</a></p>
-                    <p class="card-text mb-0"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=<?php echo $buscaCD['dados']['id']  ?>" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Página da CD</a></p>
+                    <p class="card-text mb-2 mt-3"><i class="bi bi-calendar"></i> Data de apresentação: <?php echo date('d/m', strtotime($buscaCD['dados']['dataApresentacao'])) ?> <?php echo ($buscaCD['dados']['statusProposicao']['descricaoSituacao'] == 'Arquivada') ? ' | <i class="bi bi-info-circle-fill"></i> <b>Arquivada</b>' : '' ?> </p>
+                    <p class="card-text mb-0 mt-3"><a href="<?php echo $buscaCD['dados']['urlInteiroTeor'] ?>" target="_blank"><i class="bi bi-file-earmark"></i> Ver inteiro teor</a></p>
+                    <p class="card-text mb-3"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=<?php echo $buscaCD['dados']['id']  ?>" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Página da CD</a></p>
+
+                    <?php
+                    $busca_prinicipal = $proposicaoController->buscarUltimaProposicao($proposicaoGet);
+                    if ($busca_prinicipal['status'] == 'success') {
+                        echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $busca_prinicipal['dados']['siglaTipo'] . ' ' . $busca_prinicipal['dados']['numero'] . '/' . $busca_prinicipal['dados']['ano'] . ' <i class="bi bi-box-arrow-up-right"></i></a></b></p>';
+                    }
+                    ?>
+
                 </div>
             </div>
             <div class="card shadow-sm mb-2">
