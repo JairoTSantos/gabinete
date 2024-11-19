@@ -323,8 +323,6 @@ CREATE TABLE proposicoes_autores (
 
 
 
-
-
 /*-----------------------VIEWS-----------------------*/
 CREATE VIEW view_orgaos AS SELECT orgaos.*, orgaos_tipos.orgao_tipo_nome, usuarios.usuario_nome FROM orgaos INNER JOIN orgaos_tipos ON orgaos.orgao_tipo = orgaos_tipos.orgao_tipo_id INNER JOIN usuarios ON orgaos.orgao_criado_por = usuarios.usuario_id;
 CREATE VIEW view_pessoas AS SELECT pessoas.*, pessoas_profissoes.pessoas_profissoes_nome,  pessoas_tipos.pessoa_tipo_nome, orgaos.orgao_nome, usuarios.usuario_nome FROM pessoas INNER JOIN pessoas_tipos ON pessoas.pessoa_tipo = pessoas_tipos.pessoa_tipo_id INNER JOIN orgaos ON pessoas.pessoa_orgao = orgaos.orgao_id INNER JOIN pessoas_profissoes ON pessoas.pessoa_profissao = pessoas_profissoes.pessoas_profissoes_id INNER JOIN usuarios ON pessoas.pessoa_criada_por = usuarios.usuario_id;
@@ -337,3 +335,4 @@ CREATE VIEW view_profissoes AS SELECT pessoas_profissoes.*, usuarios.usuario_nom
 CREATE VIEW view_postagens AS SELECT postagens.*, usuarios.usuario_nome, postagem_status.postagem_status_id, postagem_status.postagem_status_nome, postagem_status.postagem_status_descricao FROM postagens INNER JOIN usuarios ON postagens.postagem_criada_por = usuarios.usuario_id INNER JOIN postagem_status ON postagens.postagem_status = postagem_status.postagem_status_id;
 CREATE VIEW view_postagens_status AS SELECT postagem_status.*, usuarios.usuario_nome FROM postagem_status INNER JOIN usuarios ON postagem_status.postagem_status_criado_por = usuarios.usuario_id ORDER BY postagem_status.postagem_status_nome ASC;
 CREATE VIEW view_tipo_clipping AS SELECT clipping_tipos.*, usuarios.usuario_nome FROM clipping_tipos INNER JOIN usuarios ON clipping_tipos.clipping_tipo_criado_por = usuarios.usuario_id;
+CREATE VIEW view_proposicoes AS SELECT proposicoes_autores.proposicao_id AS proposicao_id, proposicoes_autores.proposicao_autor_id AS proposicao_autor_id, proposicoes_autores.proposicao_autor_nome AS proposicao_autor_nome, proposicoes_autores.proposicao_autor_partido AS proposicao_autor_partido, proposicoes_autores.proposicao_autor_estado AS proposicao_autor_estado, proposicoes_autores.proposicao_autor_proponente AS proposicao_autor_proponente, proposicoes_autores.proposicao_autor_assinatura AS proposicao_autor_assinatura, proposicoes.proposicao_numero AS proposicao_numero, proposicoes.proposicao_titulo AS proposicao_titulo, proposicoes.proposicao_tipo AS proposicao_tipo, proposicoes.proposicao_ementa AS proposicao_ementa, proposicoes.proposicao_ano AS proposicao_ano, proposicoes.proposicao_apresentacao AS proposicao_apresentacao, proposicoes.proposicao_arquivada AS proposicao_arquivada FROM proposicoes_autores JOIN proposicoes ON proposicoes_autores.proposicao_id = proposicoes.proposicao_id;

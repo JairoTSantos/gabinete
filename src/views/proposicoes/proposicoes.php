@@ -98,7 +98,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                 <?php
 
                                 $buscaProposicoes = $proposicaoController->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo);
-
+                               
                                 if ($buscaProposicoes['status'] == 'success') {
                                     foreach ($buscaProposicoes['dados'] as $proposicao) {
 
