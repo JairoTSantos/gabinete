@@ -19,7 +19,6 @@ class Proposicao {
         $this->conn = $db->getConnection();
     }
 
-
     public function inserirProposicao($dados) {
 
         $ano = $dados[0]['proposicao_ano'];

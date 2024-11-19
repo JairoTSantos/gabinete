@@ -28,8 +28,8 @@ MASTER_EMAIL=admin@admin.com
 MASTER_PASS=senha
 
 
-ESTADO_DEPUTADO=AP
-NOME_DEPUTADO="Acacio Favacho" (entre aspas)
+ESTADO_DEPUTADO=UF
+NOME_DEPUTADO="Nome do Deputado" (entre aspas)
 
 ```
 ## Sincronizar as tabelas do banco
