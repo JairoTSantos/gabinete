@@ -6,18 +6,19 @@ require_once '../vendor/autoload.php';
 
 use Jairosantos\GabineteDigital\Controllers\ProposicaoController;
 use Dotenv\Dotenv;
-
+use Jairosantos\GabineteDigital\Controllers\NotaTecnicaController;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../../');
 $dotenv->load();
 
 $proposicaoController = new ProposicaoController();
+$notaController = new NotaTecnicaController();
 
 $itens = isset($_GET['itens']) ? (int) $_GET['itens'] : 10;
 $ano = isset($_GET['ano']) ? (int) $_GET['ano'] : date('Y');
 $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'PL';
 $pagina = isset($_GET['pagina']) ? (int) $_GET['pagina'] : 1;
-$ordenarPor = isset($_GET['ordenarPor']) && in_array(htmlspecialchars($_GET['ordenarPor']), ['proposicao_id', 'proposicao_numero']) ? htmlspecialchars($_GET['ordenarPor']) : 'proposicao_numero';
+$ordenarPor = isset($_GET['ordenarPor']) && in_array(htmlspecialchars($_GET['ordenarPor']), ['proposicao_id', 'proposicao_numero']) ? htmlspecialchars($_GET['ordenarPor']) : 'proposicao_id';
 $ordem = isset($_GET['ordem']) ? strtolower(htmlspecialchars($_GET['ordem'])) : 'desc';
 $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
 
@@ -72,7 +73,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                     </select>
                                 </div>
                                 <div class="col-md-3 col-10">
-                                    <input type="text" class="form-control form-control-sm" name="termo" placeholder="Buscar...">
+                                    <input type="text" class="form-control form-control-sm" name="termo" placeholder="Buscar..." value="<?php echo $termo ?>">
                                 </div>
                                 <div class="col-md-1 col-2">
                                     <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-search"></i></button>
@@ -100,10 +101,18 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
 
                                 if ($buscaProposicoes['status'] == 'success') {
                                     foreach ($buscaProposicoes['dados'] as $proposicao) {
+
+                                        $nota = $notaController->buscarNotaTecnica('nota_proposicao', $proposicao['proposicao_id']);
+
+                                        if ($nota['status'] == 'success') {
+                                            $apelido = $nota['dados'][0]['nota_titulo'] . '<br>';
+                                        } else {
+                                            $apelido = '';
+                                        }
+
                                         echo '<tr>';
                                         echo '<td style="white-space: nowrap; justify-content: center; align-items: center;"><a href="?secao=nota&proposicao=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
-                                        echo '<td style="justify-content: center; align-items: center;">' . $proposicao['proposicao_ementa'] . '</td>';
-
+                                        echo '<td style="justify-content: center; align-items: center;"><b>' . $apelido . '</b>' . $proposicao['proposicao_ementa'] . '</td>';
                                         echo '</tr>';
                                     }
                                 } else if ($buscaProposicoes['status'] == 'empty' || $buscaProposicoes['status'] == 'error') {
