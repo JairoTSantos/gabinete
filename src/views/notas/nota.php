@@ -19,6 +19,9 @@ $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $propo
 
 $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet);
 
+
+
+
 ?>
 
 
@@ -45,13 +48,14 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
                 <div class="card-body p-1">
                     <?php
                     if ($buscaNota['status'] == 'not_found' || is_integer($proposicaoGet) || $buscaNota['status'] == 'error') {
-                        echo '<button class="btn btn-success btn-sm custom-nav card-description" disabled role="button"><i class="bi bi-printer-fill"></i> Imprimir nota</button>';
+                        echo '<button class="btn btn-success btn-sm custom-nav card-description" disabled role="button"><i class="bi bi-printer-fill"></i> Imprimir nota técnica</button>';
                     } else {
                         echo '<a class="btn btn-success btn-sm custom-nav card-description" href="?secao=imprimir-nota&proposicao=' . $proposicaoGet . '" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir nota</a>';
                     }
                     ?>
                 </div>
             </div>
+
             <div class="card mb-2 card-description">
                 <div class="card-body p-2">
                     <?php
@@ -66,8 +70,6 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
 
                     <h5 class="card-title mb-2"><?php echo $proposicao_titulo ?></h5>
                     <p class="card-text mb-3"><em><?php echo $buscaCD['dados']['ementa'] ?></em></p>
-
-
 
                     <?php
 
@@ -97,6 +99,43 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
 
                 </div>
             </div>
+
+            <div class="card mb-2 card-description">
+                <div class="card-body p-2">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped mb-0 custom-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Tramitações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+
+                                $buscaTramitacoesCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet . '/tramitacoes');
+
+                                usort($buscaTramitacoesCD['dados'], function ($a, $b) {
+                                    return $b['sequencia'] <=> $a['sequencia'];
+                                });
+
+                                foreach (array_slice($buscaTramitacoesCD['dados'], 1, 6) as $tramitacao) {
+                                    echo '<tr>';
+                                    echo '<td style="white-space: nowrap;">' . date('d/m/Y - H:i', strtotime($tramitacao['dataHora'])) . '</td>';
+                                    echo '<td>' . $tramitacao['despacho'] . '</td>';
+                                    echo '</tr>';
+                                }
+
+                                ?>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+
             <div class="card shadow-sm mb-2">
                 <div class="card-body p-2">
                     <?php
