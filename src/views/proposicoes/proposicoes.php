@@ -5,6 +5,11 @@ include '../src/views/includes/verificaLogado.php';
 require_once '../vendor/autoload.php';
 
 use Jairosantos\GabineteDigital\Controllers\ProposicaoController;
+use Dotenv\Dotenv;
+
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../../');
+$dotenv->load();
 
 $proposicaoController = new ProposicaoController();
 
@@ -50,7 +55,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                         <option value="desc" <?php echo $ordem == 'desc' ? 'selected' : ''; ?>>Ordem Decrescente</option>
                                     </select>
                                 </div>
-                                <div class="col-md-1 col-6">
+                                <div class="col-md-2 col-6">
                                     <select class="form-select form-select-sm" name="itens" required>
                                         <option value="5" <?php echo $itens == 5 ? 'selected' : ''; ?>>5 itens</option>
                                         <option value="10" <?php echo $itens == 10 ? 'selected' : ''; ?>>10 itens</option>
@@ -63,6 +68,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                         <option value="PL" <?php echo $tipo == 'PL' ? 'selected' : ''; ?>>PL</option>
                                         <option value="PEC" <?php echo $tipo == 'PEC' ? 'selected' : ''; ?>>PEC</option>
                                         <option value="REQ" <?php echo $tipo == 'REQ' ? 'selected' : ''; ?>>REQ</option>
+                                        <option value="PRL" <?php echo $tipo == 'PRL' ? 'selected' : ''; ?>>PRL</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 col-10">
@@ -103,7 +109,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                 } else if ($buscaProposicoes['status'] == 'empty' || $buscaProposicoes['status'] == 'error') {
                                     echo '<tr><td colspan="6">' . $buscaProposicoes['message'] . '</td></tr>';
                                 }
-                                
+
                                 ?>
 
                             </tbody>
