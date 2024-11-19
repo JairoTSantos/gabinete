@@ -29,10 +29,9 @@
     <script src="https://cdn.tiny.cloud/1/9ebpappotq2edw5qf3ik3e6m9owenjuy9buc8ddrbngfw88f/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 
-<body data-bs-theme="dark">
+<body>
 
     <?php include '../src/views/router.php' ?>
-
 
     <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/startbootstrap-simple-sidebar-master/dist/js/scripts.js"></script>

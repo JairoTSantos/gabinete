@@ -25,6 +25,8 @@ $rotas = [
     'imprimir-nota' => '../src/views/notas/imprimir-nota.php',
     'oficios' => '../src/views/oficios/oficios.php',
     'oficio' => '../src/views/oficios/editar-oficio.php',
+    'proposicoes' => '../src/views/proposicoes/proposicoes.php',
+
 
 
 ];
