@@ -116,7 +116,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                         $nota = $notaController->buscarNotaTecnica('nota_proposicao', $proposicao['proposicao_id']);
 
                                         if ($nota['status'] == 'success') {
-                                            $apelido = $nota['dados'][0]['nota_titulo'] . '<br>';
+                                            $apelido = $nota['dados'][0]['nota_titulo'] . '<br><br>';
                                             $ementa = $nota['dados'][0]['nota_resumo'];
                                         } else {
                                             $apelido = '';
