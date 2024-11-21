@@ -79,7 +79,6 @@ class ProposicaoController {
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
         }
     }
-    
 
     public function proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada) {
         try {
@@ -99,7 +98,6 @@ class ProposicaoController {
         }
     }
 
-
     public function buscarAutores($id) {
         try {
             $autores = $this->proposicaoModel->buscarAutores($id);
@@ -114,8 +112,6 @@ class ProposicaoController {
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
         }
     }
-
-
 
     public function buscarUltimaProposicao($id) {
         $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $id;
@@ -152,5 +148,25 @@ class ProposicaoController {
         }
 
         return ['status' => 'success', 'dados' => $ultimoResultado];
+    }
+
+    public function medidasProvisorias($ano) {
+
+        $busca = $this->getjson->getJson('https://legis.sensado.leg.br/dadosabertos/materia/pesquisa/lista?sigla=mpv&ano=' . $ano);
+
+        if (empty($busca)) {
+            return ['status' => 'empty',  'message' => 'Nenhum autor encontrado'];
+        }
+
+        if (isset($busca['error'])) {
+            $this->logger->novoLog('proposicao_error', ' Erro na API do senado');
+            return ['status' => 'error', 'message' => 'Erro interno do servidor'];
+        }
+
+        if (!isset($busca['PesquisaBasicaMateria']['Materias'])) {
+            return ['status' => 'empty', 'message' => 'Nenhuma medida provisória encontrada'];
+        }
+
+        return ['status' => 'success', 'dados' => $busca];
     }
 }
