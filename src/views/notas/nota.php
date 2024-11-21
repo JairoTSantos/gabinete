@@ -16,8 +16,9 @@ $proposicaoController = new ProposicaoController;
 $proposicaoGet = isset($_GET['proposicao']) ? $_GET['proposicao'] : null;
 
 $buscaNota = $notaTecnicaController->buscarNotaTecnica('nota_proposicao', $proposicaoGet);
-
 $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet);
+$buscaTramitacoesCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet . '/tramitacoes');
+$buscaProposicao = $proposicaoController->buscarProposicao($proposicaoGet);
 
 ?>
 
@@ -57,19 +58,10 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
                 <div class="card-body p-2">
                     <?php
 
-                    if (isset($buscaCD['status']) && $buscaCD['status'] == 404) {
-                        echo 'Proposição não localizada';
-                        exit();
+                    if ($buscaProposicao['status'] == 'success') {
+                        echo '<h5 class="card-title mb-2">' . $buscaProposicao['dados'][0]['proposicao_tipo'] . ' ' . $buscaProposicao['dados'][0]['proposicao_numero'] . '/' . $buscaProposicao['dados'][0]['proposicao_ano'] . '</h5>';
+                        echo ' <p class="card-text mb-3"><em>' . $buscaProposicao['dados'][0]['proposicao_ementa'] . '</em></p>';
                     }
-
-                    $proposicao_titulo = $buscaCD['dados']['siglaTipo'] . ' ' . $buscaCD['dados']['numero'] . '/' . $buscaCD['dados']['ano'];
-
-                    ?>
-
-                    <h5 class="card-title mb-2"><?php echo $proposicao_titulo ?></h5>
-                    <p class="card-text mb-3"><em><?php echo $buscaCD['dados']['ementa'] ?></em></p>
-
-                    <?php
 
                     $buscaAutorCD = $proposicaoController->buscarAutores($proposicaoGet);
 
@@ -81,17 +73,30 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
                         }
                     }
 
-                    ?>
+                    echo '<p class="card-text mb-2 mt-3"><i class="bi bi-calendar"></i> Data de apresentação: ' . date('d/m', strtotime($buscaProposicao['dados'][0]['proposicao_apresentacao'])) . (!$buscaProposicao['dados'][0]['proposicao_arquivada'] ? '' : ' | <i class="bi bi-info-circle-fill"></i> <b>Arquivada</b>') . '</p>';
+                    echo '<p class="card-text mb-0 mt-3"><a href="' . $buscaTramitacoesCD['dados'][0]['url'] . '" target="_blank"><i class="bi bi-file-earmark"></i> Ver inteiro teor</a></p>';
+                    echo '<p class="card-text mb-0"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $buscaProposicao['dados'][0]['proposicao_id'] . '" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Página da CD</a></p>';
 
-                    <p class="card-text mb-2 mt-3"><i class="bi bi-calendar"></i> Data de apresentação: <?php echo date('d/m', strtotime($buscaCD['dados']['dataApresentacao'])) ?> <?php echo ($buscaCD['dados']['statusProposicao']['descricaoSituacao'] == 'Arquivada') ? ' | <i class="bi bi-info-circle-fill"></i> <b>Arquivada</b>' : '' ?> </p>
-                    <p class="card-text mb-0 mt-3"><a href="<?php echo $buscaCD['dados']['urlInteiroTeor'] ?>" target="_blank"><i class="bi bi-file-earmark"></i> Ver inteiro teor</a></p>
-                    <p class="card-text mb-0"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=<?php echo $buscaCD['dados']['id']  ?>" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Página da CD</a></p>
+                    foreach ($buscaTramitacoesCD['dados'] as $apensado) {
+                        if ($apensado['codTipoTramitacao'] == 129) {
+                            preg_match('/PL-\d{4}\/\d{4}/', $apensado['despacho'], $matches);
+                            $primeiroApensado = str_replace('-', ' ', $matches[0]);
+                            $link = $apensado['url'];
+                        }
+                    }
 
-                    <?php
                     $busca_prinicipal = $proposicaoController->buscarUltimaProposicao($proposicaoGet);
                     if ($busca_prinicipal['status'] == 'success') {
-                        echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $busca_prinicipal['dados']['siglaTipo'] . ' ' . $busca_prinicipal['dados']['numero'] . '/' . $busca_prinicipal['dados']['ano'] . '</a></b></p>';
+                        $nomePrincipal = $busca_prinicipal['dados']['siglaTipo'] . ' ' . $busca_prinicipal['dados']['numero'] . '/' . $busca_prinicipal['dados']['ano'];
+
+                        if ($primeiroApensado == $nomePrincipal) {
+                            echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $nomePrincipal . '</a></b></p>';
+                        } else {
+                            echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto ao qual esse foi apensado: <a href="' . $link . '" target="_blank">' . $primeiroApensado . '</a></b></p>';
+                            echo '<p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $nomePrincipal . '</a></b></p>';
+                        }
                     }
+
                     ?>
 
                 </div>
@@ -109,9 +114,6 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
                             </thead>
                             <tbody>
                                 <?php
-
-                                $buscaTramitacoesCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet . '/tramitacoes');
-
 
                                 usort($buscaTramitacoesCD['dados'], function ($a, $b) {
                                     return $b['sequencia'] <=> $a['sequencia'];

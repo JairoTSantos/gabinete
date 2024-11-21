@@ -61,7 +61,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
         <p class="card-text mb-0 text-center" style="font-size: 1.1em;">Câmara dos Deputados</p>
         <p class="card-text mb-4 text-center" style="font-size: 1em;">Gabinete do Deputado <?php echo $_ENV['NOME_DEPUTADO'] ?></p>
         <p class="card-text mb-1 mt-2 text-center" style="font-size: 1.4em;"><b>Lista simples de proposições <?php echo (empty($termo)) ? '('.$ano.')' : '('.$termo.')' ?></b></p>
-        <p class="card-text mb-1 mt-o text-center" style="font-size: 1.1em;"><em>(<?php echo ($tipo == 'PL') ? 'Projetos de Lei' : 'Requerimentos' ?></em>)</p>
+        <p class="card-text mb-1 mt-o text-center" style="font-size: 1.1em;"><em>(<?php echo ($tipo == 'PL') ? 'Projetos de Lei' : 'Requerimentos' ?>) (<?php echo ($arquivada == 0) ? 'Em tramitação' : 'Arquivados' ?></em>)</p>
     </div>
 </div>
 
@@ -80,9 +80,6 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                     <?php
 
                     $buscaProposicoes = $proposicaoController->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada);
-
-
-
 
                     if ($buscaProposicoes['status'] == 'success') {
                         foreach ($buscaProposicoes['dados'] as $proposicao) {

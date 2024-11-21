@@ -113,6 +113,21 @@ class ProposicaoController {
         }
     }
 
+    public function buscarProposicao($id) {
+        try {
+            $autores = $this->proposicaoModel->buscarProposicao($id);
+
+            if (empty($autores)) {
+                return ['status' => 'empty',  'message' => 'Proposição não encontrada'];
+            }
+
+            return ['status' => 'success', 'dados' => $autores];
+        } catch (PDOException $e) {
+            $this->logger->novoLog('proposicao_error', $e->getMessage());
+            return ['status' => 'error', 'message' => 'Erro interno do servidor'];
+        }
+    }
+
     public function buscarUltimaProposicao($id) {
         $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $id;
         $primeiroResultado = null;
