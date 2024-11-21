@@ -116,7 +116,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                         }
 
                                         echo '<tr>';
-                                        echo '<td style="white-space: nowrap; justify-content: center; align-items: center;"><a href="?secao=nota&proposicao=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
+                                        echo '<td style="white-space: nowrap; justify-content: center; align-items: center;"><a href="?secao=nota&proposicao=' . $proposicao['proposicao_id'] . '">' . ($proposicao['proposicao_aprovada'] ? '<i class="bi bi-check-circle-fill"></i> ' . $proposicao['proposicao_titulo'] : $proposicao['proposicao_titulo']) . '</a></td>';
                                         echo '<td style="justify-content: center; align-items: center;"><b>' . $apelido . '</b>' . $ementa . '</td>';
                                         echo '</tr>';
                                     }

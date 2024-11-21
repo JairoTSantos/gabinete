@@ -37,7 +37,8 @@ class ProposicaoController {
                     'proposicao_tipo' => $proposicao['siglaTipo'],
                     'proposicao_ementa' => $proposicao['ementa'],
                     'proposicao_apresentacao' => $proposicao['dataApresentacao'],
-                    'proposicao_arquivada' => ($proposicao['ultimoStatus']['idSituacao'] == 923 || $proposicao['ultimoStatus']['idSituacao'] == 1140) ? 1 : 0
+                    'proposicao_arquivada' => ($proposicao['ultimoStatus']['idSituacao'] == 923 || $proposicao['ultimoStatus']['idSituacao'] == 1140) ? 1 : 0,
+                    'proposicao_aprovada' =>($proposicao['ultimoStatus']['idSituacao'] == 1140) ? 1 : 0,
                 ];
             }
 

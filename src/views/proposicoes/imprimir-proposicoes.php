@@ -49,7 +49,8 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
     /* Forçar impressão em formato retrato */
     @media print {
         @page {
-            size: landscape; /* Define o tamanho da página para retrato */
+            size: landscape;
+            /* Define o tamanho da página para retrato */
         }
     }
 </style>
@@ -60,7 +61,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
         <img src="./img/brasaooficialcolorido.png" style="width: 150px;" class="card-img-top mx-auto d-block" alt="...">
         <p class="card-text mb-0 text-center" style="font-size: 1.1em;">Câmara dos Deputados</p>
         <p class="card-text mb-4 text-center" style="font-size: 1em;">Gabinete do Deputado <?php echo $_ENV['NOME_DEPUTADO'] ?></p>
-        <p class="card-text mb-1 mt-2 text-center" style="font-size: 1.4em;"><b>Lista simples de proposições <?php echo (empty($termo)) ? '('.$ano.')' : '('.$termo.')' ?></b></p>
+        <p class="card-text mb-1 mt-2 text-center" style="font-size: 1.4em;"><b>Lista simples de proposições <?php echo (empty($termo)) ? '(' . $ano . ')' : '(' . $termo . ')' ?></b></p>
         <p class="card-text mb-1 mt-o text-center" style="font-size: 1.1em;"><em>(<?php echo ($tipo == 'PL') ? 'Projetos de Lei' : 'Requerimentos' ?>) (<?php echo ($arquivada == 0) ? 'Em tramitação' : 'Arquivados' ?></em>)</p>
     </div>
 </div>
@@ -95,7 +96,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                             }
 
                             echo '<tr>';
-                            echo '<td style="white-space: nowrap; justify-content: center; align-items: center;"><a href="?secao=nota&proposicao=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
+                            echo '<td style="white-space: nowrap; justify-content: center; align-items: center;"><a href="?secao=nota&proposicao=' . $proposicao['proposicao_id'] . '">' . ($proposicao['proposicao_aprovada'] ? '<i class="bi bi-check-circle-fill"></i> ' . $proposicao['proposicao_titulo'] : $proposicao['proposicao_titulo']) . '</a></td>';
                             echo '<td style="justify-content: center; align-items: center;"><b>' . $apelido . '</b>' . $ementa . '</td>';
                             echo '</tr>';
                         }

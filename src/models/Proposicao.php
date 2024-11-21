@@ -21,14 +21,14 @@ class Proposicao {
 
     public function inserirProposicao($dados) {
 
-        $ano = $dados[0]['proposicao_ano'];
+        
 
         $deleteQuery = "DELETE FROM proposicoes WHERE proposicao_ano = :proposicao_ano";
         $deleteStmt = $this->conn->prepare($deleteQuery);
-        $deleteStmt->bindParam(':proposicao_ano', $ano, PDO::PARAM_INT);
+        $deleteStmt->bindParam(':proposicao_ano', $dados[0]['proposicao_ano'], PDO::PARAM_INT);
         $deleteStmt->execute();
 
-        $query = "INSERT INTO proposicoes (proposicao_id, proposicao_numero, proposicao_titulo, proposicao_ano, proposicao_tipo, proposicao_ementa, proposicao_apresentacao, proposicao_arquivada) VALUES (:proposicao_id, :proposicao_numero, :proposicao_titulo, :proposicao_ano, :proposicao_tipo, :proposicao_ementa, :proposicao_apresentacao, :proposicao_arquivada)";
+        $query = "INSERT INTO proposicoes (proposicao_id, proposicao_numero, proposicao_titulo, proposicao_ano, proposicao_tipo, proposicao_ementa, proposicao_apresentacao, proposicao_arquivada, proposicao_aprovada) VALUES (:proposicao_id, :proposicao_numero, :proposicao_titulo, :proposicao_ano, :proposicao_tipo, :proposicao_ementa, :proposicao_apresentacao, :proposicao_arquivada, :proposicao_aprovada)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -41,6 +41,8 @@ class Proposicao {
             $stmt->bindParam(':proposicao_ementa', $proposicao['proposicao_ementa']);
             $stmt->bindParam(':proposicao_apresentacao', $proposicao['proposicao_apresentacao']);
             $stmt->bindParam(':proposicao_arquivada', $proposicao['proposicao_arquivada'], PDO::PARAM_INT);
+            $stmt->bindParam(':proposicao_aprovada', $proposicao['proposicao_aprovada'], PDO::PARAM_INT);
+
 
             $stmt->execute();
         }
@@ -50,11 +52,10 @@ class Proposicao {
 
     public function inserirProposicaoAutor($dados) {
 
-        $ano = $dados[0]['proposicao_autor_ano'];
 
         $deleteQuery = "DELETE FROM proposicoes_autores WHERE proposicao_autor_ano = :proposicao_autor_ano";
         $deleteStmt = $this->conn->prepare($deleteQuery);
-        $deleteStmt->bindParam(':proposicao_autor_ano', $ano, PDO::PARAM_INT);
+        $deleteStmt->bindParam(':proposicao_autor_ano', $dados[0]['proposicao_autor_ano'], PDO::PARAM_INT);
         $deleteStmt->execute();
 
         $query = "INSERT INTO proposicoes_autores (proposicao_id, proposicao_autor_id, proposicao_autor_nome, proposicao_autor_partido, proposicao_autor_estado, proposicao_autor_proponente, proposicao_autor_assinatura, proposicao_autor_ano) VALUES (:proposicao_id, :proposicao_autor_id, :proposicao_autor_nome, :proposicao_autor_partido, :proposicao_autor_estado, :proposicao_autor_proponente, :proposicao_autor_assinatura, :proposicao_autor_ano)";
@@ -77,14 +78,13 @@ class Proposicao {
         return true;
     }
 
-    public function buscarProposicao($id){
+    public function buscarProposicao($id) {
 
         $query = 'SELECT * FROM view_proposicoes WHERE proposicao_id = :id';
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     }
 
     public function proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada) {
@@ -93,7 +93,7 @@ class Proposicao {
         $offset = ($pagina - 1) * $itens;
         $assinatura = 1;
         $proponente = 1;
-        
+
 
         if (empty($termo)) {
             if (empty($tipo)) {
@@ -128,7 +128,7 @@ class Proposicao {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function buscarAutores($id){
+    public function buscarAutores($id) {
         $query = 'SELECT * FROM proposicoes_autores WHERE proposicao_id = :id';
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
