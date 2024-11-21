@@ -124,14 +124,12 @@ class ProposicaoController {
             if (isset($resposta['dados'])) {
                 $dados = $resposta['dados'];
 
-                // Armazena o primeiro resultado
                 if (!$primeiroResultado) {
                     $primeiroResultado = $dados;
                 }
 
                 $ultimoResultado = $dados;
 
-                // Verifica se há uma URI de proposição principal
                 if (!empty($dados['uriPropPrincipal'])) {
                     $url = $dados['uriPropPrincipal'];
                 } else {
@@ -142,7 +140,6 @@ class ProposicaoController {
             }
         } while ($url);
 
-        // Se o último resultado for igual ao primeiro, retorna vazio
         if ($ultimoResultado === $primeiroResultado) {
             return ['status' => 'empty', 'dados' => []];
         }

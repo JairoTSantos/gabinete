@@ -89,7 +89,7 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
                     <?php
                     $busca_prinicipal = $proposicaoController->buscarUltimaProposicao($proposicaoGet);
                     if ($busca_prinicipal['status'] == 'success') {
-                        echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $busca_prinicipal['dados']['siglaTipo'] . ' ' . $busca_prinicipal['dados']['numero'] . '/' . $busca_prinicipal['dados']['ano'] . ' <i class="bi bi-box-arrow-up-right"></i></a></b></p>';
+                        echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $busca_prinicipal['dados']['siglaTipo'] . ' ' . $busca_prinicipal['dados']['numero'] . '/' . $busca_prinicipal['dados']['ano'] . '</a></b></p>';
                     }
                     ?>
 
