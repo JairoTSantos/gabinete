@@ -52,14 +52,12 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                     <select class="form-select form-select-sm" name="tipo" required>
                                         <option value="PL" <?php echo $tipo == 'PL' ? 'selected' : ''; ?>>Projeto de Lei</option>
                                         <option value="REQ" <?php echo $tipo == 'REQ' ? 'selected' : ''; ?>>Requerimento</option>
-                                        <option value="PRL" <?php echo $tipo == 'PRL' ? 'selected' : ''; ?>>Parecer</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2 col-12">
                                     <select class="form-select form-select-sm" name="arquivada" required>
                                         <option value="1" <?php echo $arquivada == 1 ? 'selected' : ''; ?>>Arquivadas</option>
                                         <option value="0" <?php echo $arquivada == 0 ? 'selected' : ''; ?>>Em tramitação</option>
-
                                     </select>
                                 </div>
                                 <div class="col-md-2 col-6">
@@ -109,7 +107,7 @@ $termo = isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '';
                                         $nota = $notaController->buscarNotaTecnica('nota_proposicao', $proposicao['proposicao_id']);
 
                                         if ($nota['status'] == 'success') {
-                                            $apelido = $nota['dados'][0]['nota_titulo'] . '<br><br>';
+                                            $apelido = $nota['dados'][0]['nota_titulo'] . '<br>';
                                             $ementa = $nota['dados'][0]['nota_resumo'];
                                         } else {
                                             $apelido = '';

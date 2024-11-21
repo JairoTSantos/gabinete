@@ -89,7 +89,7 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
                     <?php
                     $busca_prinicipal = $proposicaoController->buscarUltimaProposicao($proposicaoGet);
                     if ($busca_prinicipal['status'] == 'success') {
-                        echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $busca_prinicipal['dados']['siglaTipo'] . ' ' . $busca_prinicipal['dados']['numero'] . '/' . $busca_prinicipal['dados']['ano'] . ' <i class="bi bi-box-arrow-up-right"></i></a></b></p>';
+                        echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $busca_prinicipal['dados']['siglaTipo'] . ' ' . $busca_prinicipal['dados']['numero'] . '/' . $busca_prinicipal['dados']['ano'] . ' <i class="bi bi-box-arrow-up-right"></i></a></b></p>';
                     }
                     ?>
 
@@ -111,14 +111,22 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
 
                                 $buscaTramitacoesCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $proposicaoGet . '/tramitacoes');
 
+
                                 usort($buscaTramitacoesCD['dados'], function ($a, $b) {
                                     return $b['sequencia'] <=> $a['sequencia'];
                                 });
 
-                                foreach (array_slice($buscaTramitacoesCD['dados'], 1, 6) as $tramitacao) {
+                                foreach (array_slice($buscaTramitacoesCD['dados'], 1, 10) as $tramitacao) {
+
+                                    if (isset($tramitacao['url'])) {
+                                        $link = '<a href="' . $tramitacao['url'] . '" target="_blank">';
+                                    } else {
+                                        $link = '';
+                                    }
+
                                     echo '<tr>';
                                     echo '<td style="white-space: nowrap;">' . date('d/m/Y - H:i', strtotime($tramitacao['dataHora'])) . '</td>';
-                                    echo '<td>' . $tramitacao['despacho'] . '</td>';
+                                    echo '<td>' .$link. $tramitacao['despacho'] . '</a></td>';
                                     echo '</tr>';
                                 }
 
