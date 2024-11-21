@@ -149,24 +149,5 @@ class ProposicaoController {
 
         return ['status' => 'success', 'dados' => $ultimoResultado];
     }
-
-    public function medidasProvisorias($ano) {
-
-        $busca = $this->getjson->getJson('https://legis.sensado.leg.br/dadosabertos/materia/pesquisa/lista?sigla=mpv&ano=' . $ano);
-
-        if (empty($busca)) {
-            return ['status' => 'empty',  'message' => 'Nenhum autor encontrado'];
-        }
-
-        if (isset($busca['error'])) {
-            $this->logger->novoLog('proposicao_error', ' Erro na API do senado');
-            return ['status' => 'error', 'message' => 'Erro interno do servidor'];
-        }
-
-        if (!isset($busca['PesquisaBasicaMateria']['Materias'])) {
-            return ['status' => 'empty', 'message' => 'Nenhuma medida provisória encontrada'];
-        }
-
-        return ['status' => 'success', 'dados' => $busca];
-    }
+   
 }
