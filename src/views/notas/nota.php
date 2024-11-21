@@ -63,6 +63,7 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
                     }
 
                     $proposicao_titulo = $buscaCD['dados']['siglaTipo'] . ' ' . $buscaCD['dados']['numero'] . '/' . $buscaCD['dados']['ano'];
+
                     ?>
 
                     <h5 class="card-title mb-2"><?php echo $proposicao_titulo ?></h5>
@@ -126,7 +127,7 @@ $buscaCD = $getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/proposic
 
                                     echo '<tr>';
                                     echo '<td style="white-space: nowrap;">' . date('d/m/Y - H:i', strtotime($tramitacao['dataHora'])) . '</td>';
-                                    echo '<td>' .$link. $tramitacao['despacho'] . '</a></td>';
+                                    echo '<td>' . $link . $tramitacao['despacho'] . '</a></td>';
                                     echo '</tr>';
                                 }
 
