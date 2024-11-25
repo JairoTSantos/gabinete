@@ -27,6 +27,8 @@ $rotas = [
     'oficio' => '../src/views/oficios/editar-oficio.php',
     'proposicoes' => '../src/views/proposicoes/proposicoes.php',
     'imprimir-proposicoes' => '../src/views/proposicoes/imprimir-proposicoes.php',
+    'comissoes-gabinete' => '../src/views/comissoes/comissoes-gab.php',
+
 ];
 
 if (array_key_exists($pagina, $rotas)) {
