@@ -79,8 +79,13 @@ $buscaProposicao = $proposicaoController->buscarProposicao($proposicaoGet);
 
                     foreach ($buscaTramitacoesCD['dados'] as $apensado) {
                         if ($apensado['codTipoTramitacao'] == 129) {
-                            preg_match('/PL-\d{4}\/\d{4}/', $apensado['despacho'], $matches);
-                            $primeiroApensado = str_replace('-', ' ', $matches[0]);
+                            $despacho = $apensado['despacho'];
+
+                            if (preg_match('/PL-\d{1,4}\/\d{4}/', $despacho, $matches)) {
+                                $primeiroApensado = $matches[0];
+                            } else {
+                                $primeiroApensado = null;
+                            }
                             $link = $apensado['url'];
                         }
                     }
