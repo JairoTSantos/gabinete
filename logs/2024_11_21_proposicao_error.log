@@ -1,5 +1,0 @@
-2024-11-21 17:23:06SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gabinete_digital.proposicoes' doesn't exist
-2024-11-21 17:27:34SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '1899-12-30T00:00:00' for column 'proposicao_apresentacao' at row 1
-2024-11-21 17:28:16SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '1899-12-30T00:00:00' for column 'proposicao_apresentacao' at row 1
-2024-11-21 17:30:45SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '1899-12-30T00:00:00' for column 'proposicao_apresentacao' at row 1
-2024-11-21 17:40:22SQLSTATE[HY000]: General error: 1356 View 'gabinete_digital.view_proposicoes' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them

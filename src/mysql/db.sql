@@ -299,7 +299,7 @@ CREATE TABLE proposicoes (
     proposicao_ano INT NOT NULL,
     proposicao_tipo VARCHAR(10) NOT NULL,
     proposicao_ementa TEXT NOT NULL,
-    proposicao_apresentacao TIMESTAMP NULL DEFAULT NULL,
+    proposicao_apresentacao DATETIME NULL DEFAULT NULL,
     proposicao_arquivada TINYINT(1) NOT NULL DEFAULT 0,
     proposicao_aprovada TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (proposicao_id)

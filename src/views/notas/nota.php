@@ -91,14 +91,15 @@ $buscaProposicao = $proposicaoController->buscarProposicao($proposicaoGet);
                     }
 
                     $busca_prinicipal = $proposicaoController->buscarUltimaProposicao($proposicaoGet);
+
                     if ($busca_prinicipal['status'] == 'success') {
-                        $nomePrincipal = $busca_prinicipal['dados']['siglaTipo'] . ' ' . $busca_prinicipal['dados']['numero'] . '/' . $busca_prinicipal['dados']['ano'];
+                        $nomePrincipal = $busca_prinicipal['dados']['siglaTipo'] . '-' . $busca_prinicipal['dados']['numero'] . '/' . $busca_prinicipal['dados']['ano'];
 
                         if ($primeiroApensado == $nomePrincipal) {
-                            echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $nomePrincipal . '</a></b></p>';
+                            echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="' . $busca_prinicipal['dados']['urlInteiroTeor'] . '" target="_blank">' . $nomePrincipal . '</a></b></p>';
                         } else {
                             echo '<hr><p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto ao qual esse foi apensado: <a href="' . $link . '" target="_blank">' . $primeiroApensado . '</a></b></p>';
-                            echo '<p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $busca_prinicipal['dados']['id'] . '" target="_blank">' . $nomePrincipal . '</a></b></p>';
+                            echo '<p class="card-text mb-2" style="font-size:1.1em"><b><i class="bi bi-exclamation-triangle-fill"></i> Projeto principal da árvore: <a href="' . $busca_prinicipal['dados']['urlInteiroTeor'] . '" target="_blank">' . $nomePrincipal . '</a></b></p>';
                         }
                     }
 
